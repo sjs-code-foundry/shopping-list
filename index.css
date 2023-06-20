@@ -1,0 +1,76 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Indie Flower', sans-serif;
+    background-color: #FBBA72;
+    color: #FBBA72;
+    user-select: none;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+    margin: 30px auto;
+}
+
+img {
+    width: 150px;
+    margin: 0 auto;
+}
+
+input {
+    color: #FBBA72;
+    background-color: #BB4D00;
+    border: 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Indie Flower', sans-serif;
+    margin: 10px 0;
+}
+
+input::placeholder {
+    color: #FBBA72;
+    opacity: 1;
+}
+
+button {
+    color: #FBBA72;
+    background-color: #8F250C;
+    border: 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Indie Flower', sans-serif;
+}
+
+button:hover {
+    background-color: #691E06;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+ul li {
+    font-size: 20px;
+    background-color: #BB4D00;
+    padding: 15px;
+    border-radius: 8px;
+    flex-grow: 1;
+    text-align: center;
+    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
+}
+
+ul li:hover {
+    background-color: #CA5310;
+    cursor: pointer;
+}
