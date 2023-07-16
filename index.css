@@ -2,8 +2,8 @@ html, body {
     margin: 0;
     padding: 0;
     font-family: 'Indie Flower', sans-serif;
-    background-color: #FBBA72;
-    color: #FBBA72;
+    background-color: #E2E2E2;
+    color: #1C0F13;
     user-select: none;
 }
 
@@ -20,8 +20,8 @@ img {
 }
 
 input {
-    color: #FBBA72;
-    background-color: #BB4D00;
+    color: #1C0F13;
+    background-color: #BBBAC6;
     border: 0;
     padding: 15px;
     border-radius: 8px;
@@ -32,13 +32,13 @@ input {
 }
 
 input::placeholder {
-    color: #FBBA72;
+    color: #1C0F13;
     opacity: 1;
 }
 
 button {
-    color: #FBBA72;
-    background-color: #8F250C;
+    color: #1C0F13;
+    background-color: #B7CECE;
     border: 0;
     padding: 15px;
     border-radius: 8px;
@@ -48,8 +48,13 @@ button {
 }
 
 button:hover {
-    background-color: #691E06;
+    background-color: #6E7E85;
     cursor: pointer;
+}
+
+hr {
+    width: 320px;
+    border-color: #1C0F13;
 }
 
 ul {
