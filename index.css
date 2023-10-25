@@ -1,3 +1,5 @@
+/* Main Formatting */
+
 html, body {
     margin: 0;
     padding: 0;
@@ -18,6 +20,8 @@ img {
     width: 150px;
     margin: 0 auto;
 }
+
+/* Interactive Elements */
 
 input {
     color: #1C0F13;
@@ -51,6 +55,8 @@ button:hover {
     background-color: #6E7E85;
     cursor: pointer;
 }
+
+/* List Elements */
 
 hr {
     width: 320px;
