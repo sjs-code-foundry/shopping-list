@@ -23,26 +23,33 @@ const appSettings = {
     messagingSenderId: "914430038851",
     appId: "1:914430038851:web:a5636fcbbf19c634c715f6"
 }
-
 const app = initializeApp(appSettings)
 const appCheck = initializeAppCheck(app, {
     provider: new ReCaptchaV3Provider('6LcPgswoAAAAAKP_C4cmyQ8on9HVpnEQSzfdH-0v'),
     isTokenAutoRefreshEnabled: true
 })
 const database = getDatabase(app)
+
+
+
 const shoppingListInDB = ref(database, "shoppingList")
+
+// DOM Elements
+
+const tabListBtnEl = document.getElementById("tab-list")
+const tabAboutBtnEl = document.getElementById("tab-about")
+
+const tabListEl = document.getElementById("sect-list")
+const tabAboutEl = document.getElementById("sect-about")
+const tabElList = [tabListEl, tabAboutEl] // For tabControl function
 
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
 const shoppingListEl = document.getElementById("shopping-list")
 
-addButtonEl.addEventListener("click", function() {
-    let inputValue = inputFieldEl.value
-    
-    push(shoppingListInDB, inputValue)
-    
-    clearInputFieldEl()
-})
+const aboutVersionEl = document.getElementById("about-version")
+
+// Update Firebase DB on Change
 
 onValue(shoppingListInDB, function(snapshot) {
     if (snapshot.exists()) {
@@ -61,6 +68,42 @@ onValue(shoppingListInDB, function(snapshot) {
         shoppingListEl.innerHTML = "No items here... yet"
     }
 })
+
+// Constants/Variables
+
+const versionNum = "v0.1.1-alpha"
+
+// Tab Control
+
+tabChange(tabListEl) // Set default tab
+
+function tabChange(targetEl) {
+    for (let i = 0; i < tabElList.length; i++) {
+        tabElList[i].style.display = "none"
+    }
+
+    targetEl.style.display = "block"
+}
+
+// Event Listeners
+
+tabListBtnEl.addEventListener("click", function() {
+    tabChange(tabListEl)
+})
+
+tabAboutBtnEl.addEventListener("click", function() {
+    tabChange(tabAboutEl)
+})
+
+addButtonEl.addEventListener("click", function() {
+    let inputValue = inputFieldEl.value
+    
+    push(shoppingListInDB, inputValue)
+    
+    clearInputFieldEl()
+})
+
+// List Functions
 
 function clearShoppingListEl() {
     shoppingListEl.innerHTML = ""
@@ -85,4 +128,11 @@ function appendItemToShoppingListEl(item) {
     })
     
     shoppingListEl.append(newEl)
+}
+
+// About Tab Functions
+versionUpdate()
+
+function versionUpdate() {
+    aboutVersionEl.textContent = `Version: ${versionNum}`
 }
