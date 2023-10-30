@@ -1,10 +1,21 @@
+/* Variables */
+
+:root {
+    --color-background: #E2E2E2;
+
+    --app-width: 320px;
+
+    --menu-icon-width: 48px;
+    --menu-icon-thickness: 4px;
+}
+
 /* Main Formatting */
 
 html, body {
     margin: 0;
     padding: 0;
     font-family: 'Indie Flower', sans-serif;
-    background-color: #E2E2E2;
+    background-color: var(--color-background);
     color: #1C0F13;
     user-select: none;
 }
@@ -12,22 +23,163 @@ html, body {
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 320px;
-    margin: 30px auto;
+    max-width: var(--app-width);
+    margin:
+        calc(var(--menu-icon-width) * 3)
+        auto
+        0
+        auto;
 }
 
 img {
-    width: 150px;
+    width: 64px;
     margin: 0 auto;
+
+    border: 1px solid red;
 }
 
-/* Interactive Elements */
+/* Header - Base CSS for Menu Hidden State */
+
+.header {
+    background-color: var(--color-background);
+    box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+    position: fixed;
+    top: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: var(--app-width);
+    z-index: 3;
+}
+
+.header ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: hidden;
+    background-color: var(--color-background);
+}
+
+.header li button {
+    display: block;
+    padding: 20px 0;
+    width: var(--app-width);
+
+    background-color: var(--color-background);
+    font-size: 32px;
+    border: none;
+}
+
+.header li button:hover {
+    background-color: #EFEFEF;
+}
+
+.header li button:active {
+    background-color: #333;
+}
+
+.header img {
+    display: block;
+    float: left;
+    font-size: 2em;
+    padding: 10px 20px;
+    text-decoration: none;
+}
+
+.header .menu {
+    clear: both;
+    max-height: 0;
+    transition: max-height .2s ease-out;
+}
+
+/* Header - Style the menu icon for the dropdown */
+
+.header .menu-icon {
+    cursor: pointer;
+    display: inline-block;
+    float: right;
+    padding:
+        calc(var(--menu-icon-width) * 0.875)
+        calc(var(--menu-icon-width) * 0.4167);
+    position: relative;
+    user-select: none;
+}
+
+.header .menu-icon .navicon {
+    background: #333;
+    display: block;
+    height: var(--menu-icon-thickness);
+    position: relative;
+    transition: background .2s ease-out;
+    width: var(--menu-icon-width);
+}
+
+.header .menu-icon .navicon:before,
+.header .menu-icon .navicon:after {
+    background: #333;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+
+.header .menu-icon .navicon:before {
+    top: calc(var(--menu-icon-width) / 3);
+}
+
+.header .menu-icon .navicon:after {
+    top: calc((var(--menu-icon-width) / 3) * -1);
+}
+
+/* Header - Icon and Menu animation for when checkbox is clicked */
+
+.header .menu-btn {
+    display: none;
+}
+
+.header .menu-btn:checked ~ .menu {
+    max-height: 240px;
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon {
+    background: transparent;
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon:before {
+    transform: rotate(-45deg);
+}
+
+.header .menu-btn:checked ~ .menu-icon .navicon:after {
+    transform: rotate(45deg);
+}
+
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
+.header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
+    top: 0;
+}
+
+/* Tab Settings */
+
+#sect-list {
+    display: block;
+}
+
+#sect-about{
+    display: none;
+    text-align: center;
+}
+
+/* Interactive Elements on Main List */
 
 input {
     color: #1C0F13;
     background-color: #BBBAC6;
     border: 0;
-    padding: 15px;
+    width: var(--app-width);
+    padding: 15px 0;
     border-radius: 8px;
     font-size: 20px;
     text-align: center;
@@ -40,10 +192,11 @@ input::placeholder {
     opacity: 1;
 }
 
-button {
+.container button {
     color: #1C0F13;
     background-color: #B7CECE;
     border: 0;
+    width: var(--app-width);
     padding: 15px;
     border-radius: 8px;
     font-size: 20px;
@@ -51,7 +204,7 @@ button {
     font-family: 'Indie Flower', sans-serif;
 }
 
-button:hover {
+.container button:hover {
     background-color: #6E7E85;
     cursor: pointer;
 }
@@ -59,7 +212,7 @@ button:hover {
 /* List Elements */
 
 hr {
-    width: 320px;
+    width: var(--app-width);
     border-color: #1C0F13;
 }
 
@@ -71,7 +224,7 @@ ul {
     gap: 10px;
 }
 
-ul li {
+.container ul li {
     font-size: 20px;
     background-color: #BB4D00;
     padding: 15px;
@@ -81,7 +234,7 @@ ul li {
     box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
 }
 
-ul li:hover {
+.container ul li:hover {
     background-color: #CA5310;
     cursor: pointer;
 }

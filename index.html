@@ -13,16 +13,32 @@
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
-        <div class="container">
-            <img src="assets/cat.png">
-            <input type="text" id="input-field" placeholder="Enter item here">
-            <button id="add-button">Add to cart</button>
-            <hr>
-            <ul id="shopping-list">
-                <!-- List items go here -->
+        <header class="header">
+            <img src="assets/cat.png" class="logo">
+            <input class="menu-btn" type="checkbox" id="menu-btn">
+            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li><button id="tab-list">Your List</button></li>
+                <li><button id="tab-about">About App</button></li>
             </ul>
-            <hr>
-        </div>
+        </header>
+        <main>
+            <div class="container">
+                <section id="sect-list">
+                    <input type="text" id="input-field" placeholder="Enter item here">
+                    <button id="add-button">Add to cart</button>
+                    <hr>
+                    <ul id="shopping-list">
+                        <!-- List items go here -->
+                    </ul>
+                </section>
+                <section id="sect-about">
+                    <hr>
+                    <h1>Shopping List App</h1>
+                    <h2 id="about-version">Version: vx.x.x-alpha</h2>
+                </section>
+            </div>
+        </main>
         <script src="index.js" type="module"></script>
     </body>
 </html>

@@ -1,21 +1,13 @@
-# co0dc4e02947432a91d59c8fa
-
-Quick start:
-
-```
-$ npm install
-$ npm start
-````
-
-Head over to https://vitejs.dev/ to learn more about using vite
-## About Scrimba
-
-At Scrimba our goal is to create the best possible coding school at the cost of a gym membership! 💜
-If we succeed with this, it will give anyone who wants to become a software developer a realistic shot at succeeding, regardless of where they live and the size of their wallets 🎉
-The Frontend Developer Career Path aims to teach you everything you need to become a Junior Developer, or you could take a deep-dive with one of our advanced courses 🚀
-
-- [Our courses](https://scrimba.com/allcourses)
-- [The Frontend Career Path](https://scrimba.com/learn/frontend)
-- [Become a Scrimba Pro member](https://scrimba.com/pricing)
-
-Happy Coding!
+# shopping-list
+A simple, no-frills shopping list app.
+## Motivation
+A no-nonsense shopping list app where I can just enter things I need and check them off when I'm done with them, nothing more.
+## Current Version
+v0.1.1-alpha
+## Dependencies
+- Firebase 10.3.1
+## Changelog
+Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated list.
+## Planned Features
+### Security
+- [ ] Implement Firebase Authentication (v0.1.2-alpha)
