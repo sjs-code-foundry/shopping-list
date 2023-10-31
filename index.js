@@ -71,7 +71,7 @@ onValue(shoppingListInDB, function(snapshot) {
 
 // Constants/Variables
 
-const versionNum = "v0.1.1-alpha"
+const versionNum = "v0.1.2-alpha"
 
 // Tab Control
 
