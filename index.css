@@ -34,8 +34,6 @@ html, body {
 img {
     width: 64px;
     margin: 0 auto;
-
-    border: 1px solid red;
 }
 
 /* Header - Base CSS for Menu Hidden State */
