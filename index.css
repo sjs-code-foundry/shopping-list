@@ -300,3 +300,93 @@ ul {
         margin: 0 5vw 0 25vw;
     }
 }
+
+/* Account Modal */
+
+:root {
+    --modal-width: 80vw;
+    --modal-padding: 10px;
+}
+
+#modal-account {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+
+    padding: var(--modal-padding);
+
+    background-color: var(--color-background);
+
+    border: 1px solid green;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#modal-account .modal-header button {
+    height: 32px;
+    padding: 5px 15px;
+    margin: auto 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+#modal-account button {
+    color: #1C0F13;
+    background-color: #B7CECE;
+    border: 0;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 20px;
+    text-align: center;
+    font-family: 'Indie Flower', sans-serif;
+}
+
+#modal-account button:hover {
+    background-color: #6E7E85;
+    cursor: pointer;
+}
+
+#modal-account input {
+    margin: 5px auto;
+}
+
+#modal-account #account-form {
+    display: flex;
+    flex-direction: column;
+
+    border: 1px solid red;
+}
+
+@media screen and (orientation: portrait) {
+    #modal-account {
+        max-width: var(--modal-width);
+        top: 20vh;
+        left: 10vw;
+    }
+
+    #modal-account input {
+        max-width: calc(var(--modal-width) - 10vw);
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #modal-account {
+        max-width: calc(var(--modal-width) - 20vw);
+        top: 20vh;
+        left: 30vw;
+    }
+
+    #modal-account input {
+        max-width: calc(var(--modal-width) - 30vw);
+    }
+}
+
+/* Footer */
+
+#footer-userstatus {
+    text-align: center;
+}

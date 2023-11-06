@@ -19,6 +19,7 @@
             <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
             <ul class="menu">
                 <li><button id="tab-list">Your List</button></li>
+                <li><button id="tab-account">Sign In</button></li>
                 <li><button id="tab-about">About App</button></li>
             </ul>
         </header>
@@ -33,12 +34,26 @@
                     </ul>
                 </section>
                 <section id="sect-about">
-                    <hr>
                     <h1>Shopping List App</h1>
                     <h2 id="about-version">Version: vx.x.x-alpha</h2>
                 </section>
             </div>
+            <div id="modal-account">
+                <div class="modal-header">
+                    <h1 id="modal-title">Sign In</h1>
+                    <button id="modal-close">X</button>
+                </div>
+                <form id="account-form">
+                    <input type="email" name="email" placeholder="someone@something.com" required>
+                    <input type="password" name="password" placeholder="********" required>
+                    <button type="submit">Sign In</button>
+                </form>
+            </div>
         </main>
+        <footer>
+            <hr>
+            <p id="footer-userstatus">Sign in to see your list.</p>
+        </footer>
         <script src="index.js" type="module"></script>
     </body>
 </html>
