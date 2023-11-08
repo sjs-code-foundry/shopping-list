@@ -64,7 +64,7 @@ input {
 
 input::placeholder {
     color: #1C0F13;
-    opacity: 1;
+    opacity: 0.5;
 }
 
 .container button {
@@ -299,6 +299,10 @@ ul {
     .container {
         margin: 0 5vw 0 25vw;
     }
+
+    footer {
+        margin: 0 5vw 0 25vw;
+    }
 }
 
 /* Account Modal */
@@ -316,8 +320,6 @@ ul {
     padding: var(--modal-padding);
 
     background-color: var(--color-background);
-
-    border: 1px solid green;
 }
 
 .modal-header {
@@ -339,6 +341,7 @@ ul {
     background-color: #B7CECE;
     border: 0;
     padding: 15px;
+    margin: 5px 0;
     border-radius: 8px;
     font-size: 20px;
     text-align: center;
@@ -357,8 +360,6 @@ ul {
 #modal-account #account-form {
     display: flex;
     flex-direction: column;
-
-    border: 1px solid red;
 }
 
 @media screen and (orientation: portrait) {
@@ -366,6 +367,7 @@ ul {
         max-width: var(--modal-width);
         top: 20vh;
         left: 10vw;
+        z-index: 4;
     }
 
     #modal-account input {
@@ -378,6 +380,7 @@ ul {
         max-width: calc(var(--modal-width) - 20vw);
         top: 20vh;
         left: 30vw;
+        z-index: 4;
     }
 
     #modal-account input {

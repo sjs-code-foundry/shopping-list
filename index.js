@@ -8,15 +8,27 @@ import {    getDatabase,
             onValue,
             remove
         } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"
+import {    getAuth,
+            connectAuthEmulator,
+            onAuthStateChanged,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut
+            } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js"
 import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"
 
 // Initialize firebase - 1st code block = DB emulator; 2nd code block = online DB
 
 // Firebase - DB Emulator
-const app = initializeApp({ projectId: "playground-62567" })
+const appSettings = { 
+    projectId: "playground-62567",
+    apiKey: "test-api-key" }
+const app = initializeApp(appSettings)
 const database = getDatabase(app)
+const auth = getAuth(app)
 if (location.hostname === "localhost") {
     connectDatabaseEmulator(database, "127.0.0.1", 9000)
+    connectAuthEmulator(auth, "http://127.0.0.1:9099")
 }
 
 // Firebase - Online Code
@@ -36,15 +48,48 @@ if (location.hostname === "localhost") {
 //     isTokenAutoRefreshEnabled: true
 // })
 // const database = getDatabase(app)
+// const auth = getAuth(app)
 
 
+let shoppingListInDB
 
-const shoppingListInDB = ref(database, "shoppingList")
+onAuthStateChanged(auth, (user => {
+    if (user) {
+        footerUserstatusEl.textContent = `Signed in as: ${user.email}`
+
+        tabLogoutBtnEl.style.display = "block"
+
+        shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
+
+        onValue(shoppingListInDB, function(snapshot) {
+            if (snapshot.exists()) {
+                let itemsArray = Object.entries(snapshot.val())
+            
+                clearShoppingListEl()
+                
+                for (let i = 0; i < itemsArray.length; i++) {
+                    let currentItem = itemsArray[i]
+                    let currentItemID = currentItem[0]
+                    let currentItemValue = currentItem[1]
+                    
+                    appendItemToShoppingListEl(currentItem)
+                }    
+            } else {
+                shoppingListEl.innerHTML = "No items here... yet"
+            }
+        })
+    } else {
+        shoppingListEl.innerHTML = "No items here... yet"
+    }
+}))
+
+// const shoppingListInDB = ref(database, "shoppingList")
 
 // DOM Elements
 
 const tabListBtnEl = document.getElementById("tab-list")
 const tabAccountBtnEl = document.getElementById("tab-account")
+const tabLogoutBtnEl = document.getElementById("tab-logout")
 const tabAboutBtnEl = document.getElementById("tab-about")
 
 const tabListEl = document.getElementById("sect-list")
@@ -53,6 +98,7 @@ const tabAboutEl = document.getElementById("sect-about")
 const tabElList = [tabListEl, tabAboutEl] // For tabControl function
 
 const tabAccountCloseBtnEl = document.getElementById("modal-close")
+const tabAccountFormEl = document.getElementById("account-form")
 
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
@@ -60,25 +106,27 @@ const shoppingListEl = document.getElementById("shopping-list")
 
 const aboutVersionEl = document.getElementById("about-version")
 
+const footerUserstatusEl = document.getElementById("footer-userstatus")
+
 // Update Firebase DB on Change
 
-onValue(shoppingListInDB, function(snapshot) {
-    if (snapshot.exists()) {
-        let itemsArray = Object.entries(snapshot.val())
+// onValue(shoppingListInDB, function(snapshot) {
+//     if (snapshot.exists()) {
+//         let itemsArray = Object.entries(snapshot.val())
     
-        clearShoppingListEl()
+//         clearShoppingListEl()
         
-        for (let i = 0; i < itemsArray.length; i++) {
-            let currentItem = itemsArray[i]
-            let currentItemID = currentItem[0]
-            let currentItemValue = currentItem[1]
+//         for (let i = 0; i < itemsArray.length; i++) {
+//             let currentItem = itemsArray[i]
+//             let currentItemID = currentItem[0]
+//             let currentItemValue = currentItem[1]
             
-            appendItemToShoppingListEl(currentItem)
-        }    
-    } else {
-        shoppingListEl.innerHTML = "No items here... yet"
-    }
-})
+//             appendItemToShoppingListEl(currentItem)
+//         }    
+//     } else {
+//         shoppingListEl.innerHTML = "No items here... yet"
+//     }
+// })
 
 // Constants/Variables
 
@@ -108,6 +156,42 @@ tabAccountBtnEl.addEventListener("click", function() {
 
 tabAccountCloseBtnEl.addEventListener("click", function() {
     tabAccountEl.style.display = "none"
+})
+
+tabAccountFormEl.addEventListener("submit", function(e) {
+    e.preventDefault()
+
+    tabAccountEl.style.display = "none"
+
+    const signInFormData = new FormData(signInFormEl)
+
+    signInWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
+        .then((userCredential) => {
+            // Signed In
+            const user = userCredential.user
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+        })
+
+        tabAccountBtnEl.style.display = "none"
+})
+
+tabLogoutBtnEl.addEventListener("click", function() {
+    auth.signOut()
+        .then(function() {
+
+            footerUserstatusEl.textContent = "Sign in to see your list."
+
+        })
+        .catch((error) => {
+        const errorCode = error.code
+        const errorMessage = error.message
+        })
+
+        tabAccountBtnEl.style.display = "block"
 })
 
 tabAboutBtnEl.addEventListener("click", function() {
