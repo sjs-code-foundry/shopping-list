@@ -99,6 +99,8 @@ const tabElList = [tabListEl, tabAboutEl] // For tabControl function
 
 const tabAccountCloseBtnEl = document.getElementById("modal-close")
 const tabAccountFormEl = document.getElementById("account-form")
+const accountSwPrompt = document.getElementById("account-sw-prompt")
+const accountSwitchBtn = document.getElementById("account-switch")
 
 const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
@@ -131,6 +133,9 @@ const footerUserstatusEl = document.getElementById("footer-userstatus")
 // Constants/Variables
 
 const versionNum = "v0.1.3-alpha"
+
+let accountExists = true
+signInOnSwitch()
 
 // Tab Control
 
@@ -165,18 +170,34 @@ tabAccountFormEl.addEventListener("submit", function(e) {
 
     const signInFormData = new FormData(signInFormEl)
 
-    signInWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
-        .then((userCredential) => {
-            // Signed In
-            const user = userCredential.user
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
-        })
 
-        tabAccountBtnEl.style.display = "none"
+    if (accountExists) {
+        signInWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
+            .then((userCredential) => {
+                // Signed In
+                const user = userCredential.user
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code
+                const errorMessage = error.message
+            })
+
+            tabAccountBtnEl.style.display = "none"
+    } else {
+        // Sign Up
+    }
+        
+})
+
+accountSwitchBtn.addEventListener("click", function() {
+    if (accountExists) {
+        accountExists = false
+        signInOnSwitch()
+    } else {
+        accountExists = true
+        signInOnSwitch()
+    }
 })
 
 tabLogoutBtnEl.addEventListener("click", function() {
@@ -205,6 +226,22 @@ addButtonEl.addEventListener("click", function() {
     
     clearInputFieldEl()
 })
+
+// Account Form Functions
+
+function signInOnSwitch() {
+    if (accountExists) {
+        accountSwPrompt.textContent = "No account?"
+        accountSwitchBtn.textContent = "Sign Up"
+        document.getElementById("modal-title").textContent = "Sign In"
+        tabAccountBtnEl.textContent = "Sign In"
+    } else {
+        accountSwPrompt.textContent = "Got an account?"
+        accountSwitchBtn.textContent = "Sign In"
+        document.getElementById("modal-title").textContent = "Sign Up"
+        tabAccountBtnEl.textContent = "Sign Up"
+    }
+}
 
 // List Functions
 

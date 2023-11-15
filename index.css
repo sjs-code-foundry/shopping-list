@@ -320,6 +320,7 @@ ul {
     padding: var(--modal-padding);
 
     background-color: var(--color-background);
+    box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
 }
 
 .modal-header {
@@ -360,6 +361,25 @@ ul {
 #modal-account #account-form {
     display: flex;
     flex-direction: column;
+}
+
+#modal-account #account-sw-line {
+    display: flex;
+    flex-direction: row;
+}
+
+#modal-account p, #modal-account #account-switch {
+    margin: 5px 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+#modal-account #account-switch {
+    cursor: pointer;
+    margin-left: 5px;
+    color: blue;
+    background-color: var(--color-background);
+    text-decoration: underline;
 }
 
 @media screen and (orientation: portrait) {
