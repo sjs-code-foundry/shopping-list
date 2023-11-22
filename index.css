@@ -220,7 +220,7 @@ ul {
     }
 
     .header .menu-btn:checked ~ .menu {
-        max-height: 240px;
+        max-height: 480px;
     }
 
     .header .menu-btn:checked ~ .menu-icon .navicon {
@@ -305,15 +305,14 @@ ul {
     }
 }
 
-/* Account Modal */
+/* Common Modal Settings */
 
 :root {
     --modal-width: 80vw;
     --modal-padding: 10px;
 }
 
-#modal-account {
-    display: none;
+#modal-account, #modal-alert {
     flex-direction: column;
     position: absolute;
 
@@ -329,12 +328,19 @@ ul {
     justify-content: space-between;
 }
 
-#modal-account .modal-header button {
+#modal-account .modal-header button, #modal-alert .modal-header button {
     height: 32px;
     padding: 5px 15px;
     margin: auto 0;
     font-size: 20px;
     text-align: center;
+}
+
+/* Account Modal */
+
+/* Complete setup of CSS for both modals */
+#modal-account {
+    display: none;
 }
 
 #modal-account button {
@@ -405,6 +411,30 @@ ul {
 
     #modal-account input {
         max-width: calc(var(--modal-width) - 30vw);
+    }
+}
+
+/* Alert Modal */
+
+#modal-alert {
+    display: none;
+}
+
+@media screen and (orientation: portrait) {
+    #modal-alert {
+        max-width: var(--modal-width);
+        top: 20vh;
+        left: 10vw;
+        z-index: 4;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #modal-alert {
+        max-width: calc(var(--modal-width) - 20vw);
+        top: 20vh;
+        left: 30vw;
+        z-index: 4;
     }
 }
 

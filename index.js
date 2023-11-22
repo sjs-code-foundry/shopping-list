@@ -135,7 +135,9 @@ const footerUserstatusEl = document.getElementById("footer-userstatus")
 const versionNum = "v0.1.3-alpha"
 
 let accountExists = true
-signInOnSwitch()
+signInOnSwitch() // Setup initial state of sign-in modal
+
+tabLogoutBtnEl.style.display = "none"
 
 // Tab Control
 
@@ -168,8 +170,7 @@ tabAccountFormEl.addEventListener("submit", function(e) {
 
     tabAccountEl.style.display = "none"
 
-    const signInFormData = new FormData(signInFormEl)
-
+    const signInFormData = new FormData(tabAccountFormEl)
 
     if (accountExists) {
         signInWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
@@ -184,8 +185,23 @@ tabAccountFormEl.addEventListener("submit", function(e) {
             })
 
             tabAccountBtnEl.style.display = "none"
+            tabLogoutBtnEl.style.display = "block"
+            tabAccountFormEl.reset()
     } else {
-        // Sign Up
+        createUserWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
+            .then((userCredential) => {
+                // Signed Up
+                const user = userCredential.user
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code
+                const errorMessage = error.message
+            })
+
+            tabAccountBtnEl.style.display = "none"
+            tabLogoutBtnEl.style.display = "block"
+            tabAccountFormEl.reset()
     }
         
 })
@@ -213,6 +229,7 @@ tabLogoutBtnEl.addEventListener("click", function() {
         })
 
         tabAccountBtnEl.style.display = "block"
+        tabLogoutBtnEl.style.display = "none"
 })
 
 tabAboutBtnEl.addEventListener("click", function() {
@@ -222,7 +239,7 @@ tabAboutBtnEl.addEventListener("click", function() {
 addButtonEl.addEventListener("click", function() {
     let inputValue = inputFieldEl.value
     
-    push(shoppingListInDB, inputValue)
+    push(shoppingListInDB, inputValue) // Pushes inputs to DB without signin - FIX!!!
     
     clearInputFieldEl()
 })
@@ -235,11 +252,13 @@ function signInOnSwitch() {
         accountSwitchBtn.textContent = "Sign Up"
         document.getElementById("modal-title").textContent = "Sign In"
         tabAccountBtnEl.textContent = "Sign In"
+        tabAccountFormEl.reset()
     } else {
         accountSwPrompt.textContent = "Got an account?"
         accountSwitchBtn.textContent = "Sign In"
         document.getElementById("modal-title").textContent = "Sign Up"
         tabAccountBtnEl.textContent = "Sign Up"
+        tabAccountFormEl.reset()
     }
 }
 
