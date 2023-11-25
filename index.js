@@ -139,6 +139,8 @@ signInOnSwitch() // Setup initial state of sign-in modal
 
 tabLogoutBtnEl.style.display = "none"
 
+inputLock(true)
+
 // Tab Control
 
 tabChange(tabListEl) // Set default tab
@@ -177,33 +179,37 @@ tabAccountFormEl.addEventListener("submit", function(e) {
             .then((userCredential) => {
                 // Signed In
                 const user = userCredential.user
+
+                tabAccountBtnEl.style.display = "none"
+                tabLogoutBtnEl.style.display = "block"
+                tabAccountFormEl.reset()
+
+                inputLock(false)
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code
                 const errorMessage = error.message
             })
-
-            tabAccountBtnEl.style.display = "none"
-            tabLogoutBtnEl.style.display = "block"
-            tabAccountFormEl.reset()
     } else {
         createUserWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
             .then((userCredential) => {
                 // Signed Up
                 const user = userCredential.user
+
+                tabAccountBtnEl.style.display = "none"
+                tabLogoutBtnEl.style.display = "block"
+                tabAccountFormEl.reset()
+
+                inputLock(false)
                 // ...
             })
             .catch((error) => {
                 const errorCode = error.code
                 const errorMessage = error.message
             })
-
-            tabAccountBtnEl.style.display = "none"
-            tabLogoutBtnEl.style.display = "block"
-            tabAccountFormEl.reset()
     }
-        
+
 })
 
 accountSwitchBtn.addEventListener("click", function() {
@@ -221,6 +227,8 @@ tabLogoutBtnEl.addEventListener("click", function() {
         .then(function() {
 
             footerUserstatusEl.textContent = "Sign in to see your list."
+
+            inputLock(true)
 
         })
         .catch((error) => {
@@ -272,6 +280,22 @@ function clearInputFieldEl() {
     inputFieldEl.value = ""
 }
 
+function inputLock(state) {
+    if (state) {
+        inputFieldEl.disabled = true
+
+        addButtonEl.disabled = true
+        addButtonEl.style.color = "lightgray"
+        addButtonEl.style.cursor = "not-allowed"
+    } else {
+        inputFieldEl.disabled = false
+
+        addButtonEl.disabled = false
+        addButtonEl.style.color = "#1C0F13"
+        addButtonEl.style.cursor = "pointer"
+    }
+}
+
 function appendItemToShoppingListEl(item) {
     let itemID = item[0]
     let itemValue = item[1]
@@ -281,10 +305,15 @@ function appendItemToShoppingListEl(item) {
     newEl.textContent = itemValue
     
     newEl.addEventListener("click", function() {
-        let exactLocationOfItemInDB = ref(database, `shoppingList/${itemID}`)
+        console.log(JSON.stringify(shoppingListInDB)) // This works, need to extract without the first part of URL
+        // try logging out the database part of ref?
+
+        let exactLocationOfItemInDB = ref(database, `${user.uid}/shoppingList/${itemID}`) // FIX!!!
         
         remove(exactLocationOfItemInDB)
     })
+
+    // shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
     
     shoppingListEl.append(newEl)
 }
