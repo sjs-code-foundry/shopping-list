@@ -15,3 +15,4 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [ ] Implement Firebase Authentication (v0.1.3-alpha)
 ### User Experience
 - [ ] Disable Add to cart button if no text is entered (v0.1.4-alpha)
+- [ ] Convert all text & element sizes to em values for scalability across devices (v0.1.4-alpha)
