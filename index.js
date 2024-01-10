@@ -1,3 +1,4 @@
+/* === Imports === */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js"
 import {    initializeAppCheck,
             ReCaptchaV3Provider
@@ -17,9 +18,9 @@ import {    getAuth,
             } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js"
 import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"
 
-// Initialize firebase - 1st code block = DB emulator; 2nd code block = online DB
+/* === Initialize Firebase === */
 
-// Firebase - DB Emulator
+/* == Firebase - Local DB Emulator == */
 const appSettings = { 
     projectId: "playground-62567",
     apiKey: "test-api-key" }
@@ -31,7 +32,7 @@ if (location.hostname === "localhost") {
     connectAuthEmulator(auth, "http://127.0.0.1:9099")
 }
 
-// Firebase - Online Code
+/* == Firebase - Online DB == */
 // const appSettings = {
 //     databaseURL: "https://playground-62567-default-rtdb.europe-west1.firebasedatabase.app/",
 //     apiKey: "AIzaSyBF39RJz9HnX_gU2aUhe31IHJz8vp7qnEM",
@@ -52,6 +53,8 @@ if (location.hostname === "localhost") {
 
 
 let shoppingListInDB
+
+/* == Firebase - Update List for User == */
 
 onAuthStateChanged(auth, (user => {
     if (user) {
@@ -83,9 +86,7 @@ onAuthStateChanged(auth, (user => {
     }
 }))
 
-// const shoppingListInDB = ref(database, "shoppingList")
-
-// DOM Elements
+/* === DOM Elements === */
 
 const tabListBtnEl = document.getElementById("tab-list")
 const tabAccountBtnEl = document.getElementById("tab-account")
@@ -110,27 +111,7 @@ const aboutVersionEl = document.getElementById("about-version")
 
 const footerUserstatusEl = document.getElementById("footer-userstatus")
 
-// Update Firebase DB on Change
-
-// onValue(shoppingListInDB, function(snapshot) {
-//     if (snapshot.exists()) {
-//         let itemsArray = Object.entries(snapshot.val())
-    
-//         clearShoppingListEl()
-        
-//         for (let i = 0; i < itemsArray.length; i++) {
-//             let currentItem = itemsArray[i]
-//             let currentItemID = currentItem[0]
-//             let currentItemValue = currentItem[1]
-            
-//             appendItemToShoppingListEl(currentItem)
-//         }    
-//     } else {
-//         shoppingListEl.innerHTML = "No items here... yet"
-//     }
-// })
-
-// Constants/Variables
+/* === Constants/Variables === */
 
 const versionNum = "v0.1.3-alpha"
 
@@ -141,7 +122,7 @@ tabLogoutBtnEl.style.display = "none"
 
 inputLock(true)
 
-// Tab Control
+/* === Tab Control === */
 
 tabChange(tabListEl) // Set default tab
 
@@ -153,7 +134,7 @@ function tabChange(targetEl) {
     targetEl.style.display = "block"
 }
 
-// Event Listeners
+/* === Event Listeners === */
 
 tabListBtnEl.addEventListener("click", function() {
     tabChange(tabListEl)
@@ -252,8 +233,9 @@ addButtonEl.addEventListener("click", function() {
     clearInputFieldEl()
 })
 
-// Account Form Functions
+/* === Functions === */
 
+/* == Account Form == */
 function signInOnSwitch() {
     if (accountExists) {
         accountSwPrompt.textContent = "No account?"
@@ -270,7 +252,7 @@ function signInOnSwitch() {
     }
 }
 
-// List Functions
+/* == List == */
 
 function clearShoppingListEl() {
     shoppingListEl.innerHTML = ""
@@ -318,7 +300,7 @@ function appendItemToShoppingListEl(item) {
     shoppingListEl.append(newEl)
 }
 
-// About Tab Functions
+/* == About Tab == */
 versionUpdate()
 
 function versionUpdate() {
