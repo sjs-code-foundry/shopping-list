@@ -9,10 +9,14 @@ v0.1.3-alpha
 ## Changelog
 Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated list.
 ## Planned Features
-### Code Readability
-- [ ] Refactor code to get rid of unnecessary getElementById consts (v0.1.4-alpha)
-### Security
-- [ ] Implement Firebase Authentication (v0.1.3-alpha)
-### User Experience
-- [ ] Disable Add to cart button if no text is entered (v0.1.4-alpha)
-- [ ] Convert all text & element sizes to em values for scalability across devices (v0.1.4-alpha)
+### v0.1.3-alpha
+#### Quality of Life (for me)
+- [ ] Implement isOffline const for easy switching between live and emulator
+#### Security
+- [ ] Implement Firebase Authentication
+### v0.1.4-alpha
+#### Code Readability
+- [ ] Refactor code to get rid of unnecessary getElementById consts
+#### User Experience
+- [ ] Disable Add to cart button if no text is entered
+- [ ] Convert all text & element sizes to em values for scalability across devices
