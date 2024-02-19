@@ -26,6 +26,18 @@
         </header>
         <main>
             <div class="container">
+                <section id="sect-account">
+                    <h1 id="modal-title">Sign In</h1>
+                    <form id="account-form">
+                        <input type="email" name="email" placeholder="someone@something.com" required>
+                        <input type="password" name="password" placeholder="********" required>
+                        <button type="submit">Submit</button>
+                    </form>
+                    <div id="account-sw-line">
+                        <p id="account-sw-prompt">No account?</p>
+                        <button id="account-switch">Sign Up</button>
+                    </div>
+                </section>
                 <section id="sect-list">
                     <input type="text" id="input-field" placeholder="Enter item here">
                     <button id="add-button">Add to cart</button>
@@ -38,21 +50,6 @@
                     <h1>Shopping List App</h1>
                     <h2 id="about-version">Version: vx.x.x-alpha</h2>
                 </section>
-            </div>
-            <div id="modal-account">
-                <div class="modal-header">
-                    <h1 id="modal-title">Sign In</h1>
-                    <button id="modal-close">X</button>
-                </div>
-                <form id="account-form">
-                    <input type="email" name="email" placeholder="someone@something.com" required>
-                    <input type="password" name="password" placeholder="********" required>
-                    <button type="submit">Submit</button>
-                </form>
-                <div id="account-sw-line">
-                    <p id="account-sw-prompt">No account?</p>
-                    <button id="account-switch">Sign Up</button>
-                </div>
             </div>
             <div id="modal-alert">
                 <div class="modal-header">

@@ -13,7 +13,14 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 #### Quality of Life (for me)
 - [ ] Implement isOffline const for easy switching between live and emulator
 #### Security
-- [ ] Implement Firebase Authentication
+- [x] Implement Firebase Authentication
+- [ ] Fix Firebase Authentication
+- [ ] Get App Check to work
+#### User Experience
+- [ ] Ensure that when the user auto-logs back in the buttons & inputs work correctly
+- [ ] Implement auto-close function for drop-down menu (click anywhere other than on menu)
+#### Testing
+- [ ] Try to get emulators working so you can apply the fix to the Weekly Checks app
 ### v0.1.4-alpha
 #### Code Readability
 - [ ] Refactor code to get rid of unnecessary getElementById consts

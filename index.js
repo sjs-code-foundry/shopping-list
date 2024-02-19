@@ -1,90 +1,182 @@
 /* === Imports === */
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app.js"
-import {    initializeAppCheck,
-            ReCaptchaV3Provider
-        } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-app-check.js";
-import {    getDatabase,
-            ref,
-            push,
-            onValue,
-            remove
-        } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"
-import {    getAuth,
-            connectAuthEmulator,
-            onAuthStateChanged,
-            createUserWithEmailAndPassword,
-            signInWithEmailAndPassword,
-            signOut
-            } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-auth.js"
-import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/10.3.1/firebase-database.js"
 
-/* === Initialize Firebase === */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
+import { initializeAppCheck,
+         ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check.js";
+import { getDatabase,
+         ref,
+         push,
+         onValue,
+         remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"
+import { getAuth,
+         onAuthStateChanged,
+         createUserWithEmailAndPassword,
+         signInWithEmailAndPassword,
+         GoogleAuthProvider,
+         signInWithPopup,
+         signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
+import { getFirestore,
+         collection,
+         addDoc,
+         serverTimestamp,
+         onSnapshot,
+         query,
+         where,
+         orderBy,
+         doc,
+         deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 
-/* == Firebase - Local DB Emulator == */
-const appSettings = { 
-    projectId: "playground-62567",
-    apiKey: "test-api-key" }
+import { connectAuthEmulator }  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
+// import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js" // Delete
+import { connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
+
+/* === Firebase -  Initialize Firebase === */
+
+const isOffline = false
+
+const appSettings = getAppConfig()
 const app = initializeApp(appSettings)
-const database = getDatabase(app)
+
+const appCheck = getAppCheck()
+
 const auth = getAuth(app)
-if (location.hostname === "localhost") {
-    connectDatabaseEmulator(database, "127.0.0.1", 9000)
+// const provider = new GoogleAuthProvider() // Retain for google logins
+
+const database = getFirestore(app)
+
+if (isOffline && location.hostname === "localhost") {
+
+    // connectDatabaseEmulator(database, "127.0.0.1", 9000) // Delete
     connectAuthEmulator(auth, "http://127.0.0.1:9099")
+    connectFirestoreEmulator(database, '127.0.0.1', 8080) // Not known if functioning correctly
+
 }
 
-/* == Firebase - Online DB == */
-// const appSettings = {
-//     databaseURL: "https://playground-62567-default-rtdb.europe-west1.firebasedatabase.app/",
-//     apiKey: "AIzaSyBF39RJz9HnX_gU2aUhe31IHJz8vp7qnEM",
-//     authDomain: "playground-62567.firebaseapp.com",
-//     databaseURL: "https://playground-62567-default-rtdb.europe-west1.firebasedatabase.app",
-//     projectId: "playground-62567",
-//     storageBucket: "playground-62567.appspot.com",
-//     messagingSenderId: "914430038851",
-//     appId: "1:914430038851:web:a5636fcbbf19c634c715f6"
-// }
-// const app = initializeApp(appSettings)
-// const appCheck = initializeAppCheck(app, {
-//     provider: new ReCaptchaV3Provider('6LcPgswoAAAAAKP_C4cmyQ8on9HVpnEQSzfdH-0v'),
-//     isTokenAutoRefreshEnabled: true
-// })
-// const database = getDatabase(app)
-// const auth = getAuth(app)
+function getAppConfig() {
 
+    if (isOffline) {
+
+        return { 
+                    projectId: "shopping-list-94f50",
+                    apiKey: "test-api-key",
+                    authDomain: "test",
+                    appId: "test"
+                }
+
+    } else {
+
+        return {
+                    apiKey: "AIzaSyCuR9uK0W0DXuahvbbBCzn4ITXuIKh9Mbs",
+                    authDomain: "shopping-list-94f50.firebaseapp.com",
+                    projectId: "shopping-list-94f50",
+                    storageBucket: "shopping-list-94f50.appspot.com",
+                    messagingSenderId: "209544764408",
+                    appId: "1:209544764408:web:751d9c64ee3f47e1f8d40d"
+                }
+
+    }
+
+}
+
+function getAppCheck() {
+
+    if (isOffline) {
+
+        // AppCheck not needed
+
+    } else {
+
+        return initializeAppCheck(app, {
+            provider: new ReCaptchaEnterpriseProvider('6LcPgswoAAAAAKP_C4cmyQ8on9HVpnEQSzfdH-0v'),
+            isTokenAutoRefreshEnabled: true
+        })
+
+    }
+
+}
 
 let shoppingListInDB
 
+/* == Firebase - Database Location Ref == */
+
+const collectionName = "shoppingList"
+
 /* == Firebase - Update List for User == */
+
+// onAuthStateChanged(auth, (user => {
+//     if (user) {
+//         footerUserstatusEl.textContent = `Signed in as: ${user.email}`
+
+//         tabLogoutBtnEl.style.display = "block"
+
+//         shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
+
+//         onValue(shoppingListInDB, function(snapshot) {
+//             if (snapshot.exists()) {
+//                 let itemsArray = Object.entries(snapshot.val())
+            
+//                 clearShoppingListEl()
+                
+//                 for (let i = 0; i < itemsArray.length; i++) {
+//                     let currentItem = itemsArray[i]
+//                     let currentItemID = currentItem[0]
+//                     let currentItemValue = currentItem[1]
+                    
+//                     appendItemToShoppingListEl(currentItem)
+//                 }    
+//             } else {
+//                 shoppingListEl.innerHTML = "No items here... yet"
+//             }
+//         })
+//     } else {
+//         shoppingListEl.innerHTML = "No items here... yet"
+//     }
+// }))
 
 onAuthStateChanged(auth, (user => {
     if (user) {
+
         footerUserstatusEl.textContent = `Signed in as: ${user.email}`
 
+        tabAccountBtnEl.style.display = "none"
+        tabListBtnEl.style.display = "block"
         tabLogoutBtnEl.style.display = "block"
 
-        shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
+        fetchShoppingList(user)
 
-        onValue(shoppingListInDB, function(snapshot) {
-            if (snapshot.exists()) {
-                let itemsArray = Object.entries(snapshot.val())
-            
-                clearShoppingListEl()
-                
-                for (let i = 0; i < itemsArray.length; i++) {
-                    let currentItem = itemsArray[i]
-                    let currentItemID = currentItem[0]
-                    let currentItemValue = currentItem[1]
-                    
-                    appendItemToShoppingListEl(currentItem)
-                }    
-            } else {
-                shoppingListEl.innerHTML = "No items here... yet"
-            }
-        })
     } else {
+
         shoppingListEl.innerHTML = "No items here... yet"
+
     }
 }))
+
+function fetchShoppingListInRealTimeFromDB(query, user) {
+
+    onSnapshot(query, (querySnapshot) => {
+
+        clearShoppingListEl()
+
+        querySnapshot.forEach((doc) => {
+
+            appendItemToShoppingListEl(shoppingListEl, doc)
+
+        })
+
+    })
+
+}
+
+function fetchShoppingList(user) {
+
+    const shoppingListRef = collection(database, collectionName)
+
+    const q = query(shoppingListRef,    where("uid", "==", user.uid),
+                                        orderBy("createdAt", "body"))
+
+    fetchShoppingListInRealTimeFromDB(q, user)
+
+}
 
 /* === DOM Elements === */
 
@@ -93,10 +185,10 @@ const tabAccountBtnEl = document.getElementById("tab-account")
 const tabLogoutBtnEl = document.getElementById("tab-logout")
 const tabAboutBtnEl = document.getElementById("tab-about")
 
+const tabAccountEl = document.getElementById("sect-account")
 const tabListEl = document.getElementById("sect-list")
-const tabAccountEl = document.getElementById("modal-account")
 const tabAboutEl = document.getElementById("sect-about")
-const tabElList = [tabListEl, tabAboutEl] // For tabControl function
+const tabElList = [tabAccountEl, tabListEl, tabAboutEl] // For tabControl function
 
 const tabAccountCloseBtnEl = document.getElementById("modal-close")
 const tabAccountFormEl = document.getElementById("account-form")
@@ -118,13 +210,14 @@ const versionNum = "v0.1.3-alpha"
 let accountExists = true
 signInOnSwitch() // Setup initial state of sign-in modal
 
+tabListBtnEl.style.display = "none"
 tabLogoutBtnEl.style.display = "none"
 
 inputLock(true)
 
 /* === Tab Control === */
 
-tabChange(tabListEl) // Set default tab
+tabChange(tabAccountEl) // Set default tab
 
 function tabChange(targetEl) {
     for (let i = 0; i < tabElList.length; i++) {
@@ -141,12 +234,16 @@ tabListBtnEl.addEventListener("click", function() {
 })
 
 tabAccountBtnEl.addEventListener("click", function() {
-    tabAccountEl.style.display = "flex"
+    tabChange(tabAccountEl)
 })
 
-tabAccountCloseBtnEl.addEventListener("click", function() {
-    tabAccountEl.style.display = "none"
+tabAboutBtnEl.addEventListener("click", function() {
+    tabChange(tabAboutEl)
 })
+
+// tabAccountCloseBtnEl.addEventListener("click", function() {
+//     tabAccountEl.style.display = "none"
+// })
 
 tabAccountFormEl.addEventListener("submit", function(e) {
     e.preventDefault()
@@ -156,39 +253,17 @@ tabAccountFormEl.addEventListener("submit", function(e) {
     const signInFormData = new FormData(tabAccountFormEl)
 
     if (accountExists) {
-        signInWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
-            .then((userCredential) => {
-                // Signed In
-                const user = userCredential.user
+        
+        authSignInWithEmail(signInFormData)
 
-                tabAccountBtnEl.style.display = "none"
-                tabLogoutBtnEl.style.display = "block"
-                tabAccountFormEl.reset()
+        tabListBtnEl.style.display = "block"
 
-                inputLock(false)
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-            })
     } else {
-        createUserWithEmailAndPassword(auth, signInFormData.get('email'), signInFormData.get('password'))
-            .then((userCredential) => {
-                // Signed Up
-                const user = userCredential.user
 
-                tabAccountBtnEl.style.display = "none"
-                tabLogoutBtnEl.style.display = "block"
-                tabAccountFormEl.reset()
+        authCreateAccountWithEmail(signInFormData)
 
-                inputLock(false)
-                // ...
-            })
-            .catch((error) => {
-                const errorCode = error.code
-                const errorMessage = error.message
-            })
+        tabListBtnEl.style.display = "block"
+
     }
 
 })
@@ -204,31 +279,20 @@ accountSwitchBtn.addEventListener("click", function() {
 })
 
 tabLogoutBtnEl.addEventListener("click", function() {
-    auth.signOut()
-        .then(function() {
 
-            footerUserstatusEl.textContent = "Sign in to see your list."
+    authSignOut()
 
-            inputLock(true)
+    tabChange(tabAccountEl)
 
-        })
-        .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-        })
-
-        tabAccountBtnEl.style.display = "block"
-        tabLogoutBtnEl.style.display = "none"
-})
-
-tabAboutBtnEl.addEventListener("click", function() {
-    tabChange(tabAboutEl)
+    tabAccountBtnEl.style.display = "block"
+    tabListBtnEl.style.display = "none"
+    tabLogoutBtnEl.style.display = "none"
 })
 
 addButtonEl.addEventListener("click", function() {
     let inputValue = inputFieldEl.value
     
-    push(shoppingListInDB, inputValue) // Pushes inputs to DB without signin - FIX!!!
+    addItemToDB(inputValue, auth.currentUser)
     
     clearInputFieldEl()
 })
@@ -236,6 +300,7 @@ addButtonEl.addEventListener("click", function() {
 /* === Functions === */
 
 /* == Account Form == */
+
 function signInOnSwitch() {
     if (accountExists) {
         accountSwPrompt.textContent = "No account?"
@@ -250,6 +315,73 @@ function signInOnSwitch() {
         tabAccountBtnEl.textContent = "Sign Up"
         tabAccountFormEl.reset()
     }
+}
+
+/* == Authentication == */
+
+function authSignInWithEmail(formData) {
+
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed In
+            const user = userCredential.user
+
+            tabAccountBtnEl.style.display = "none"
+            tabLogoutBtnEl.style.display = "block"
+            tabAccountFormEl.reset()
+
+            inputLock(false)
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+        })
+
+}
+
+function authCreateAccountWithEmail(formData) {
+
+    const email = formData.get('email')
+    const password = formData.get('password')
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed Up
+            const user = userCredential.user
+
+            tabAccountBtnEl.style.display = "none"
+            tabLogoutBtnEl.style.display = "block"
+            tabAccountFormEl.reset()
+
+            inputLock(false)
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+        })
+
+}
+
+function authSignOut() {
+
+    signOut(auth)
+        .then(function() {
+
+            footerUserstatusEl.textContent = "Sign in to see your list."
+
+            inputLock(true)
+
+        })
+        .catch((error) => {
+            const errorCode = error.code
+            const errorMessage = error.message
+        })
+
 }
 
 /* == List == */
@@ -278,29 +410,76 @@ function inputLock(state) {
     }
 }
 
-function appendItemToShoppingListEl(item) {
-    let itemID = item[0]
-    let itemValue = item[1]
+// function appendItemToShoppingListEl(item) {
+//     let itemID = item[0]
+//     let itemValue = item[1]
     
-    let newEl = document.createElement("li")
+//     let newEl = document.createElement("li")
     
-    newEl.textContent = itemValue
+//     newEl.textContent = itemValue
     
-    newEl.addEventListener("click", function() {
-        console.log(JSON.stringify(shoppingListInDB)) // This works, need to extract without the first part of URL
-        // try logging out the database part of ref?
+//     newEl.addEventListener("click", function() {
+//         console.log(JSON.stringify(shoppingListInDB)) // This works, need to extract without the first part of URL
+//         // try logging out the database part of ref?
 
-        let exactLocationOfItemInDB = ref(database, `${user.uid}/shoppingList/${itemID}`) // FIX!!!
+//         let exactLocationOfItemInDB = ref(database, `${user.uid}/shoppingList/${itemID}`) // FIX!!!
         
-        remove(exactLocationOfItemInDB)
+//         remove(exactLocationOfItemInDB) // Inoperable, 
+//     })
+
+//     // shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
+    
+//     shoppingListEl.append(newEl)
+// }
+
+function appendItemToShoppingListEl(listEl, wholeDoc) {
+
+    const postData = wholeDoc.data()
+
+    let newEl = document.createElement("li")
+
+    newEl.textContent = postData.body
+
+    newEl.addEventListener("click", function() {
+
+        deleteItemFromDB(wholeDoc.id)
+
     })
 
-    // shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
-    
     shoppingListEl.append(newEl)
+
+}
+
+/* = Firestore = */
+
+async function addItemToDB(itemBody, user) {
+
+    try {
+
+        const docRef = await addDoc(collection(database, collectionName), {
+            body: itemBody,
+            uid: user.uid,
+            createdAt: serverTimestamp(),
+        })
+
+        console.log("Document written with ID: ", docRef.id)
+
+    } catch (error) {
+
+        console.error(error.message)
+
+    }
+
+}
+
+async function deleteItemFromDB(docId) {
+
+    await deleteDoc(doc(database, collectionName, docId))
+
 }
 
 /* == About Tab == */
+
 versionUpdate()
 
 function versionUpdate() {
