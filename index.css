@@ -66,6 +66,22 @@ img {
     text-align: center;
 }
 
+/* Sign In Area */
+
+#account-login-google {
+    margin: 20px 0 10px 0;
+
+    color: white;
+    background-color: grey;
+
+    font-weight: bold;
+}
+
+#account-login-google:hover {
+    background-color: #6E7E85;
+    cursor: pointer;
+}
+
 /* Interactive Elements on Main List */
 
 input {

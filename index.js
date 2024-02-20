@@ -39,7 +39,7 @@ const app = initializeApp(appSettings)
 // const appCheck = getAppCheck() // Fix Later
 
 const auth = getAuth(app)
-// const provider = new GoogleAuthProvider() // Retain for google logins
+const provider = new GoogleAuthProvider()
 
 const database = getFirestore(app)
 
@@ -168,6 +168,7 @@ const tabElList = [tabAccountEl, tabListEl, tabAboutEl] // For tabControl functi
 
 const tabAccountFormEl = document.getElementById("account-form")
 const accountSwPrompt = document.getElementById("account-sw-prompt")
+const accountLoginGoogleBtn = document.getElementById("account-login-google")
 const accountSwitchBtn = document.getElementById("account-switch")
 
 const inputFieldEl = document.getElementById("input-field")
@@ -265,6 +266,12 @@ tabAccountFormEl.addEventListener("submit", function(e) {
 
 })
 
+accountLoginGoogleBtn.addEventListener("click", function() {
+
+    authSignInWithGoogle()
+
+})
+
 accountSwitchBtn.addEventListener("click", function() {
 
     if (accountExists) {
@@ -337,7 +344,20 @@ function signInOnSwitch() {
 
 /* == Authentication == */
 
-// Add sign in with Google here
+function authSignInWithGoogle() {
+
+    signInWithPopup(auth, provider)
+        .then((result) => {
+
+            // Signed In
+
+        }).catch((error) => {
+
+            modalAlert("Sign in with Google failed!", error.message)
+
+        })
+
+}
 
 function authSignInWithEmail(formData) {
 
