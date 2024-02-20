@@ -3,11 +3,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"
 import { initializeAppCheck,
          ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app-check.js";
-import { getDatabase,
-         ref,
-         push,
-         onValue,
-         remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"
 import { getAuth,
          onAuthStateChanged,
          createUserWithEmailAndPassword,
@@ -36,7 +31,7 @@ const isOffline = false
 const appSettings = getAppConfig()
 const app = initializeApp(appSettings)
 
-// const appCheck = getAppCheck() // Fix Later
+// const appCheck = getAppCheck() // Get this working!!!
 
 const auth = getAuth(app)
 const provider = new GoogleAuthProvider()
@@ -85,7 +80,7 @@ function getAppCheck() {
     } else {
 
         return initializeAppCheck(app, {
-            provider: new ReCaptchaEnterpriseProvider('6LcPgswoAAAAAKP_C4cmyQ8on9HVpnEQSzfdH-0v'),
+            provider: new ReCaptchaEnterpriseProvider("6LcPgswoAAAAAKP_C4cmyQ8on9HVpnEQSzfdH-0v"),
             isTokenAutoRefreshEnabled: true
         })
 
@@ -350,6 +345,8 @@ function authSignInWithGoogle() {
         .then((result) => {
 
             // Signed In
+
+            tabChange(tabListEl)
 
         }).catch((error) => {
 
