@@ -37,7 +37,7 @@ const isOffline = false
 const appSettings = getAppConfig()
 const app = initializeApp(appSettings)
 
-const appCheck = getAppCheck()
+// const appCheck = getAppCheck() // Fix Later
 
 const auth = getAuth(app)
 // const provider = new GoogleAuthProvider() // Retain for google logins
@@ -334,6 +334,8 @@ function authSignInWithEmail(formData) {
             tabAccountFormEl.reset()
 
             inputLock(false)
+
+            tabChange(tabListEl)
             // ...
         })
         .catch((error) => {
@@ -358,6 +360,8 @@ function authCreateAccountWithEmail(formData) {
             tabAccountFormEl.reset()
 
             inputLock(false)
+
+            tabChange(tabListEl)
             // ...
         })
         .catch((error) => {
@@ -375,6 +379,8 @@ function authSignOut() {
             footerUserstatusEl.textContent = "Sign in to see your list."
 
             inputLock(true)
+
+            tabChange(tabAccountEl)
 
         })
         .catch((error) => {
