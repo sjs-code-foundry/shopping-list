@@ -134,6 +134,7 @@ const collectionName = "shoppingList"
 // }))
 
 onAuthStateChanged(auth, (user => {
+
     if (user) {
 
         footerUserstatusEl.textContent = `Signed in as: ${user.email}`
@@ -153,6 +154,7 @@ onAuthStateChanged(auth, (user => {
         shoppingListEl.innerHTML = "No items here... yet"
 
     }
+
 }))
 
 function fetchShoppingListInRealTimeFromDB(query, user) {
@@ -189,6 +191,9 @@ const tabAccountBtnEl = document.getElementById("tab-account")
 const tabLogoutBtnEl = document.getElementById("tab-logout")
 const tabAboutBtnEl = document.getElementById("tab-about")
 
+const headerAreaEl = document.getElementById("header-area")
+const headerMenuBtn = document.getElementById("menu-btn")
+
 const tabAccountEl = document.getElementById("sect-account")
 const tabListEl = document.getElementById("sect-list")
 const tabAboutEl = document.getElementById("sect-about")
@@ -221,28 +226,50 @@ inputLock(true)
 
 /* === Tab Control === */
 
-tabChange(tabAccountEl) // Set default tab
+tabChange(tabElList[1]) // Set default tab to tabListEl
 
 function tabChange(targetEl) {
+
     for (let i = 0; i < tabElList.length; i++) {
         tabElList[i].style.display = "none"
     }
 
     targetEl.style.display = "block"
+
 }
 
 /* === Event Listeners === */
 
+document.addEventListener("click", function(e) {
+
+    if (!e.target.closest("#header-area")) {
+
+        headerMenuBtn.checked = false
+
+    } else if (e.target.nodeName === "BUTTON") {
+
+        headerMenuBtn.checked = false
+
+    }
+
+})
+
 tabListBtnEl.addEventListener("click", function() {
+
     tabChange(tabListEl)
+
 })
 
 tabAccountBtnEl.addEventListener("click", function() {
+
     tabChange(tabAccountEl)
+
 })
 
 tabAboutBtnEl.addEventListener("click", function() {
+
     tabChange(tabAboutEl)
+
 })
 
 // tabAccountCloseBtnEl.addEventListener("click", function() {
@@ -250,6 +277,7 @@ tabAboutBtnEl.addEventListener("click", function() {
 // })
 
 tabAccountFormEl.addEventListener("submit", function(e) {
+
     e.preventDefault()
 
     tabAccountEl.style.display = "none"
@@ -260,15 +288,13 @@ tabAccountFormEl.addEventListener("submit", function(e) {
         
         authSignInWithEmail(signInFormData)
 
-        tabListBtnEl.style.display = "block"
-
     } else {
 
         authCreateAccountWithEmail(signInFormData)
 
-        tabListBtnEl.style.display = "block"
-
     }
+
+    tabListBtnEl.style.display = "block"
 
 })
 
