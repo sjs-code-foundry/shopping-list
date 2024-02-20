@@ -5,7 +5,7 @@ A no-nonsense shopping list app where I can just enter things I need and check t
 ## Current Version
 v0.1.3-alpha
 ## Dependencies
-- Firebase 10.3.1
+- Firebase 10.8.0
 ## Changelog
 Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated list.
 ## Planned Features
