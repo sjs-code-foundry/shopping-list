@@ -38,13 +38,48 @@ img {
 
 /* Tab Settings */
 
-#sect-list {
-    display: block;
+#sect-account #account-sw-line {
+    display: flex;
+    flex-direction: row;
 }
 
-#sect-about{
-    display: none;
+#sect-account p, #account-switch {
+    margin: 1em 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+#account-sw-prompt {
+    width: 120px;
+}
+
+#account-switch {
+    cursor: pointer;
+    margin-left: 5px;
+    color: blue;
+    background-color: var(--color-background);
+    text-align: left;
+    text-decoration: underline;
+}
+
+#sect-about {
     text-align: center;
+}
+
+/* Sign In Area */
+
+#account-login-google {
+    margin: 20px 0 10px 0;
+
+    color: white;
+    background-color: grey;
+
+    font-weight: bold;
+}
+
+#account-login-google:hover {
+    background-color: #6E7E85;
+    cursor: pointer;
 }
 
 /* Interactive Elements on Main List */
@@ -64,7 +99,7 @@ input {
 
 input::placeholder {
     color: #1C0F13;
-    opacity: 1;
+    opacity: 0.5;
 }
 
 .container button {
@@ -220,7 +255,7 @@ ul {
     }
 
     .header .menu-btn:checked ~ .menu {
-        max-height: 240px;
+        max-height: 480px;
     }
 
     .header .menu-btn:checked ~ .menu-icon .navicon {
@@ -299,4 +334,67 @@ ul {
     .container {
         margin: 0 5vw 0 25vw;
     }
+
+    footer {
+        margin: 0 5vw 0 25vw;
+    }
+}
+
+/* Alert Modal */
+
+:root {
+    --modal-width: 80vw;
+    --modal-padding: 10px;
+}
+
+#modal-alert {
+    display: none;
+
+    flex-direction: column;
+    position: absolute;
+
+    padding: var(--modal-padding);
+
+    border-radius: 20px;
+
+    background-color: var(--color-background);
+    box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#modal-alert .modal-header button {
+    height: 56px;
+    padding: 5px 20px;
+    margin: auto 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+@media screen and (orientation: portrait) {
+    #modal-alert {
+        width: var(--modal-width);
+        top: 20vh;
+        left: 10vw;
+        z-index: 4;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #modal-alert {
+        width: calc(var(--modal-width) - 20vw);
+        top: 20vh;
+        left: 30vw;
+        z-index: 4;
+    }
+}
+
+/* Footer */
+
+#footer-userstatus {
+    text-align: center;
 }
