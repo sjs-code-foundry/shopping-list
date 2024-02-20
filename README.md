@@ -3,19 +3,12 @@ A simple, no-frills shopping list app.
 ## Motivation
 A no-nonsense shopping list app where I can just enter things I need and check them off when I'm done with them, nothing more.
 ## Current Version
-v0.1.3-alpha
+v0.1.4-alpha
 ## Dependencies
-- Firebase 10.3.1
+- Firebase 10.8.0
 ## Changelog
 Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated list.
 ## Planned Features
-### v0.1.3-alpha
-#### Security
-- [x] Implement Firebase Authentication
-- [x] Fix Firebase Authentication
-#### User Experience
-- [x] Ensure that when the user auto-logs back in the buttons & inputs work correctly
-- [x] Implement auto-close function for drop-down menu (click anywhere other than on menu)
 ### v0.1.4-alpha
 #### Security
 - [ ] Get App Check to work
