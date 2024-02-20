@@ -178,7 +178,7 @@ function fetchShoppingList(user) {
     const shoppingListRef = collection(database, collectionName)
 
     const q = query(shoppingListRef,    where("uid", "==", user.uid),
-                                        orderBy("createdAt", "body"))
+                                        orderBy("body", "asc"))
 
     fetchShoppingListInRealTimeFromDB(q, user)
 
@@ -191,7 +191,6 @@ const tabAccountBtnEl = document.getElementById("tab-account")
 const tabLogoutBtnEl = document.getElementById("tab-logout")
 const tabAboutBtnEl = document.getElementById("tab-about")
 
-const headerAreaEl = document.getElementById("header-area")
 const headerMenuBtn = document.getElementById("menu-btn")
 
 const tabAccountEl = document.getElementById("sect-account")
@@ -199,7 +198,6 @@ const tabListEl = document.getElementById("sect-list")
 const tabAboutEl = document.getElementById("sect-about")
 const tabElList = [tabAccountEl, tabListEl, tabAboutEl] // For tabControl function
 
-const tabAccountCloseBtnEl = document.getElementById("modal-close")
 const tabAccountFormEl = document.getElementById("account-form")
 const accountSwPrompt = document.getElementById("account-sw-prompt")
 const accountSwitchBtn = document.getElementById("account-switch")
