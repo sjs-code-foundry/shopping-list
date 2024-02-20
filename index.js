@@ -27,7 +27,6 @@ import { getFirestore,
          deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 
 import { connectAuthEmulator }  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js"
-// import { connectDatabaseEmulator } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js" // Delete
 import { connectFirestoreEmulator } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js"
 
 /* === Firebase -  Initialize Firebase === */
@@ -46,7 +45,6 @@ const database = getFirestore(app)
 
 if (isOffline && location.hostname === "localhost") {
 
-    // connectDatabaseEmulator(database, "127.0.0.1", 9000) // Delete
     connectAuthEmulator(auth, "http://127.0.0.1:9099")
     connectFirestoreEmulator(database, '127.0.0.1', 8080) // Not known if functioning correctly
 
@@ -102,36 +100,6 @@ let shoppingListInDB
 const collectionName = "shoppingList"
 
 /* == Firebase - Update List for User == */
-
-// onAuthStateChanged(auth, (user => {
-//     if (user) {
-//         footerUserstatusEl.textContent = `Signed in as: ${user.email}`
-
-//         tabLogoutBtnEl.style.display = "block"
-
-//         shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
-
-//         onValue(shoppingListInDB, function(snapshot) {
-//             if (snapshot.exists()) {
-//                 let itemsArray = Object.entries(snapshot.val())
-            
-//                 clearShoppingListEl()
-                
-//                 for (let i = 0; i < itemsArray.length; i++) {
-//                     let currentItem = itemsArray[i]
-//                     let currentItemID = currentItem[0]
-//                     let currentItemValue = currentItem[1]
-                    
-//                     appendItemToShoppingListEl(currentItem)
-//                 }    
-//             } else {
-//                 shoppingListEl.innerHTML = "No items here... yet"
-//             }
-//         })
-//     } else {
-//         shoppingListEl.innerHTML = "No items here... yet"
-//     }
-// }))
 
 onAuthStateChanged(auth, (user => {
 
@@ -206,6 +174,9 @@ const inputFieldEl = document.getElementById("input-field")
 const addButtonEl = document.getElementById("add-button")
 const shoppingListEl = document.getElementById("shopping-list")
 
+const modalAlertEl = document.getElementById("modal-alert")
+const modalAlertCloseBtn = document.getElementById("modal-alert-close")
+
 const aboutVersionEl = document.getElementById("about-version")
 
 const footerUserstatusEl = document.getElementById("footer-userstatus")
@@ -250,6 +221,8 @@ document.addEventListener("click", function(e) {
 
     }
 
+    // Refactor above with or statement in if
+
 })
 
 tabListBtnEl.addEventListener("click", function() {
@@ -269,10 +242,6 @@ tabAboutBtnEl.addEventListener("click", function() {
     tabChange(tabAboutEl)
 
 })
-
-// tabAccountCloseBtnEl.addEventListener("click", function() {
-//     tabAccountEl.style.display = "none"
-// })
 
 tabAccountFormEl.addEventListener("submit", function(e) {
 
@@ -297,13 +266,19 @@ tabAccountFormEl.addEventListener("submit", function(e) {
 })
 
 accountSwitchBtn.addEventListener("click", function() {
+
     if (accountExists) {
+
         accountExists = false
         signInOnSwitch()
+
     } else {
+
         accountExists = true
         signInOnSwitch()
+
     }
+
 })
 
 tabLogoutBtnEl.addEventListener("click", function() {
@@ -315,14 +290,23 @@ tabLogoutBtnEl.addEventListener("click", function() {
     tabAccountBtnEl.style.display = "block"
     tabListBtnEl.style.display = "none"
     tabLogoutBtnEl.style.display = "none"
+
 })
 
 addButtonEl.addEventListener("click", function() {
+
     let inputValue = inputFieldEl.value
     
     addItemToDB(inputValue, auth.currentUser)
     
     clearInputFieldEl()
+
+})
+
+modalAlertCloseBtn.addEventListener("click", function() {
+
+    modalAlertEl.style.display = "none"
+
 })
 
 /* === Functions === */
@@ -330,22 +314,30 @@ addButtonEl.addEventListener("click", function() {
 /* == Account Form == */
 
 function signInOnSwitch() {
+
     if (accountExists) {
+
         accountSwPrompt.textContent = "No account?"
         accountSwitchBtn.textContent = "Sign Up"
         document.getElementById("modal-title").textContent = "Sign In"
         tabAccountBtnEl.textContent = "Sign In"
         tabAccountFormEl.reset()
+
     } else {
+
         accountSwPrompt.textContent = "Got an account?"
         accountSwitchBtn.textContent = "Sign In"
         document.getElementById("modal-title").textContent = "Sign Up"
         tabAccountBtnEl.textContent = "Sign Up"
         tabAccountFormEl.reset()
+
     }
+
 }
 
 /* == Authentication == */
+
+// Add sign in with Google here
 
 function authSignInWithEmail(formData) {
 
@@ -365,8 +357,22 @@ function authSignInWithEmail(formData) {
             // ...
         })
         .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
+
+            if (error.code === "auth/invalid-credential") {
+
+                const errorMessage = `              
+                Login denied because your email address or password were
+                 incorrectly entered.  Correct your mistake and try again.
+                `
+
+                modalAlert("Wrong username or password!", errorMessage)
+
+            } else {
+
+                modalAlert(`Sign In Error Code: ${error.code}`, error.message)
+
+            }
+
         })
 
 }
@@ -389,8 +395,9 @@ function authCreateAccountWithEmail(formData) {
             // ...
         })
         .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
+
+            modalAlert(`Create Account Error Code: ${error.code}`, error.message)
+
         })
 
 }
@@ -406,8 +413,9 @@ function authSignOut() {
 
         })
         .catch((error) => {
-            const errorCode = error.code
-            const errorMessage = error.message
+
+            modalAlert(`Sign Out Error Code: ${error.code}`, error.message)
+
         })
 
 }
@@ -437,28 +445,6 @@ function inputLock(state) {
         addButtonEl.style.cursor = "pointer"
     }
 }
-
-// function appendItemToShoppingListEl(item) {
-//     let itemID = item[0]
-//     let itemValue = item[1]
-    
-//     let newEl = document.createElement("li")
-    
-//     newEl.textContent = itemValue
-    
-//     newEl.addEventListener("click", function() {
-//         console.log(JSON.stringify(shoppingListInDB)) // This works, need to extract without the first part of URL
-//         // try logging out the database part of ref?
-
-//         let exactLocationOfItemInDB = ref(database, `${user.uid}/shoppingList/${itemID}`) // FIX!!!
-        
-//         remove(exactLocationOfItemInDB) // Inoperable, 
-//     })
-
-//     // shoppingListInDB = ref(database, `${user.uid}/shoppingList`)
-    
-//     shoppingListEl.append(newEl)
-// }
 
 function appendItemToShoppingListEl(listEl, wholeDoc) {
 
@@ -490,11 +476,9 @@ async function addItemToDB(itemBody, user) {
             createdAt: serverTimestamp(),
         })
 
-        console.log("Document written with ID: ", docRef.id)
-
     } catch (error) {
 
-        console.error(error.message)
+        modalAlert("Adding item to Database failed!", error.message)
 
     }
 
@@ -503,6 +487,17 @@ async function addItemToDB(itemBody, user) {
 async function deleteItemFromDB(docId) {
 
     await deleteDoc(doc(database, collectionName, docId))
+
+}
+
+/* == Alert Modal == */
+
+function modalAlert(heading, content) {
+
+    document.getElementById("modal-alert-header").textContent = heading
+    document.getElementById("modal-alert-body").textContent = content
+
+    modalAlertEl.style.display = "block"
 
 }
 

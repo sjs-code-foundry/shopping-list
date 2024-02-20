@@ -23,7 +23,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [ ] Try to get emulators working so you can apply the fix to the Weekly Checks app
 ### v0.1.4-alpha
 #### Aesthetics
-- [ ] Fix spacing of link buttons
+- [ ] Fix spacing of link buttons in drop-down, sidebar and login menus
 #### Code Readability
 - [ ] Refactor code to get rid of unnecessary getElementById consts
 #### User Experience

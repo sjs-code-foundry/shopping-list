@@ -324,18 +324,22 @@ ul {
     }
 }
 
-/* Common Modal Settings */
+/* Alert Modal */
 
 :root {
     --modal-width: 80vw;
     --modal-padding: 10px;
 }
 
-#modal-account, #modal-alert {
+#modal-alert {
+    display: none;
+
     flex-direction: column;
     position: absolute;
 
     padding: var(--modal-padding);
+
+    border-radius: 20px;
 
     background-color: var(--color-background);
     box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
@@ -347,23 +351,17 @@ ul {
     justify-content: space-between;
 }
 
-#modal-account .modal-header button, #modal-alert .modal-header button {
-    height: 32px;
-    padding: 5px 15px;
+#modal-alert .modal-header button {
+    height: 56px;
+    padding: 5px 20px;
     margin: auto 0;
     font-size: 20px;
     text-align: center;
 }
 
-/* Alert Modal */
-
-#modal-alert {
-    display: none;
-}
-
 @media screen and (orientation: portrait) {
     #modal-alert {
-        max-width: var(--modal-width);
+        width: var(--modal-width);
         top: 20vh;
         left: 10vw;
         z-index: 4;
@@ -372,7 +370,7 @@ ul {
 
 @media screen and (orientation: landscape) {
     #modal-alert {
-        max-width: calc(var(--modal-width) - 20vw);
+        width: calc(var(--modal-width) - 20vw);
         top: 20vh;
         left: 30vw;
         z-index: 4;
