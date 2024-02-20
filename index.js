@@ -142,9 +142,13 @@ onAuthStateChanged(auth, (user => {
         tabListBtnEl.style.display = "block"
         tabLogoutBtnEl.style.display = "block"
 
+        inputLock(false)
+
         fetchShoppingList(user)
 
     } else {
+
+        inputLock(true)
 
         shoppingListEl.innerHTML = "No items here... yet"
 
@@ -333,8 +337,6 @@ function authSignInWithEmail(formData) {
             tabLogoutBtnEl.style.display = "block"
             tabAccountFormEl.reset()
 
-            inputLock(false)
-
             tabChange(tabListEl)
             // ...
         })
@@ -359,8 +361,6 @@ function authCreateAccountWithEmail(formData) {
             tabLogoutBtnEl.style.display = "block"
             tabAccountFormEl.reset()
 
-            inputLock(false)
-
             tabChange(tabListEl)
             // ...
         })
@@ -377,8 +377,6 @@ function authSignOut() {
         .then(function() {
 
             footerUserstatusEl.textContent = "Sign in to see your list."
-
-            inputLock(true)
 
             tabChange(tabAccountEl)
 
