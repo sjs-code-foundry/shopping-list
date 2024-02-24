@@ -5,11 +5,15 @@
 
     --app-width: 90vw;
 
-    --menu-icon-width: 48px;
-    --menu-icon-thickness: 4px;
+    --menu-icon-width: 3em;
+    --menu-icon-thickness: 0.25em;
 }
 
 /* Main Formatting */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 html, body {
     margin: 0;
@@ -32,7 +36,7 @@ html, body {
 }
 
 img {
-    width: 64px;
+    width: 2em;
     margin: 0 auto;
 }
 
@@ -46,16 +50,15 @@ img {
 #sect-account p, #account-switch {
     margin: 1em 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 
 #account-sw-prompt {
-    width: 120px;
+    width: 7.5em;
 }
 
 #account-switch {
-    cursor: pointer;
-    margin-left: 5px;
+    cursor: pointer;        
     color: blue;
     background-color: var(--color-background);
     text-align: left;
@@ -69,7 +72,7 @@ img {
 /* Sign In Area */
 
 #account-login-google {
-    margin: 20px 0 10px 0;
+    margin: 1.25em 0 0.625em 0;
 
     color: white;
     background-color: grey;
@@ -94,7 +97,7 @@ input {
     font-size: 20px;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
-    margin: 10px 0;
+    margin: 0.625em 0;
 }
 
 input::placeholder {
@@ -107,9 +110,9 @@ input::placeholder {
     background-color: #B7CECE;
     border: 0;
     width: var(--app-width);
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 20px;
+    padding: 1em;
+    border-radius: 0.4em;
+    font-size: 1.25rem;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
 }
@@ -131,17 +134,17 @@ ul {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.625em;
 }
 
 .container ul li {
-    font-size: 20px;
+    font-size: 1.25rem;
     background-color: #BB4D00;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 0.8em;
+    border-radius: 0.4em;
     flex-grow: 1;
     text-align: center;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.2)
 }
 
 .container ul li:hover {
@@ -156,7 +159,7 @@ ul {
 
     .header {
         background-color: var(--color-background);
-        box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+        box-shadow: 0.0625em 0.0625em 0.25em 0 rgba(0,0,0,.1);
         position: fixed;
         top: 0;
         margin: 0 auto;
@@ -177,11 +180,11 @@ ul {
 
     .header li button {
         display: block;
-        padding: 20px 0;
+        padding: 0.625em 0;
         width: var(--app-width);
 
         background-color: var(--color-background);
-        font-size: 32px;
+        font-size: 2rem;
         border: none;
     }
 
@@ -196,8 +199,8 @@ ul {
     .header img {
         display: block;
         float: left;
-        font-size: 2em;
-        padding: 10px 20px;
+        font-size: 2rem;
+        padding: 0.3125em 0.625em;
         text-decoration: none;
     }
 
@@ -255,7 +258,7 @@ ul {
     }
 
     .header .menu-btn:checked ~ .menu {
-        max-height: 480px;
+        max-height: 30em;
     }
 
     .header .menu-btn:checked ~ .menu-icon .navicon {
@@ -279,7 +282,7 @@ ul {
 @media screen and (orientation: landscape) {
     .header {
         background-color: var(--color-background);
-        box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+        box-shadow: 0.0625em 0.0625em 0.25em 0 rgba(0,0,0,.1);
         position: fixed;
         top: 0;
         left: 0;
@@ -300,11 +303,11 @@ ul {
 
     .header li button {
         display: block;
-        padding: 20px 0;
+        padding: 0.625em 0;
         width: 20vw;
 
         background-color: var(--color-background);
-        font-size: 32px;
+        font-size: 2rem;
         border: none;
     }
 
@@ -344,7 +347,7 @@ ul {
 
 :root {
     --modal-width: 80vw;
-    --modal-padding: 10px;
+    --modal-padding: 0.625em;
 }
 
 #modal-alert {
@@ -355,10 +358,10 @@ ul {
 
     padding: var(--modal-padding);
 
-    border-radius: 20px;
+    border-radius: 1.25em;
 
     background-color: var(--color-background);
-    box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
+    box-shadow: 0 0 0.3125em 0.3125em rgba(0,0,0,.1);
 }
 
 .modal-header {
@@ -368,10 +371,10 @@ ul {
 }
 
 #modal-alert .modal-header button {
-    height: 56px;
-    padding: 5px 20px;
+    height: 2.8em;
+    padding: 0.25em 1em;
     margin: auto 0;
-    font-size: 20px;
+    font-size: 1.25rem;
     text-align: center;
 }
 
