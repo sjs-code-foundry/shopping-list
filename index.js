@@ -325,6 +325,8 @@ function signInOnSwitch() {
         tabAccountBtnEl.textContent = "Sign In"
         tabAccountFormEl.reset()
 
+        accountLoginGoogleBtn.style.display = "inline-block"
+
     } else {
 
         accountSwPrompt.textContent = "Got an account?"
@@ -332,6 +334,8 @@ function signInOnSwitch() {
         document.getElementById("modal-title").textContent = "Sign Up"
         tabAccountBtnEl.textContent = "Sign Up"
         tabAccountFormEl.reset()
+
+        accountLoginGoogleBtn.style.display = "none"
 
     }
 
