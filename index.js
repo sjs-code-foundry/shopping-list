@@ -388,6 +388,8 @@ function authSignInWithEmail(formData) {
 
                 modalAlert(`Sign In Error Code: ${error.code}`, error.message)
 
+                tabAccountFormEl.reset()
+
             }
 
         })
@@ -414,6 +416,8 @@ function authCreateAccountWithEmail(formData) {
         .catch((error) => {
 
             modalAlert(`Create Account Error Code: ${error.code}`, error.message)
+
+            tabAccountFormEl.reset()
 
         })
 

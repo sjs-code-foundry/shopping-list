@@ -16,7 +16,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [ ] Implement isOffline const for easy switching between live and emulator
 #### User Experience
 - [ ] Disable Add to cart button if no text is entered
-- [ ] Convert all text & element sizes to em values for scalability across devices
+- [x] Convert all text & element sizes to em values for scalability across devices
 - [ ] Add focus states to the input fields
 #### Aesthetics
 - [ ] Fix spacing of link buttons in drop-down, sidebar and login menus
