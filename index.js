@@ -110,6 +110,8 @@ onAuthStateChanged(auth, (user => {
 
         fetchShoppingList(user)
 
+        lockAddButton(true)
+
     } else {
 
         inputLock(true)
@@ -295,6 +297,12 @@ tabLogoutBtnEl.addEventListener("click", function() {
 
 })
 
+inputFieldEl.addEventListener("input", function() {
+
+    lockAddButton(false)
+
+})
+
 addButtonEl.addEventListener("click", function() {
 
     let inputValue = inputFieldEl.value
@@ -302,6 +310,8 @@ addButtonEl.addEventListener("click", function() {
     addItemToDB(inputValue, auth.currentUser)
     
     clearInputFieldEl()
+
+    lockAddButton(true)
 
 })
 
@@ -456,19 +466,53 @@ function clearInputFieldEl() {
 }
 
 function inputLock(state) {
+
     if (state) {
+
+        lockInputField(true)
+
+        lockAddButton(true)
+
+    } else {
+
+        lockInputField(false)
+
+        lockAddButton(false)
+
+    }
+
+}
+
+function lockInputField(state) {
+
+    if (state) {
+
         inputFieldEl.disabled = true
+
+    } else {
+
+        inputFieldEl.disabled = false
+
+    }
+
+}
+
+function lockAddButton(state) {
+
+    if (state) {
 
         addButtonEl.disabled = true
         addButtonEl.style.color = "lightgray"
         addButtonEl.style.cursor = "not-allowed"
+
     } else {
-        inputFieldEl.disabled = false
 
         addButtonEl.disabled = false
         addButtonEl.style.color = "#1C0F13"
         addButtonEl.style.cursor = "pointer"
+
     }
+
 }
 
 function appendItemToShoppingListEl(listEl, wholeDoc) {
