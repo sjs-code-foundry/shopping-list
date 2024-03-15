@@ -303,6 +303,22 @@ inputFieldEl.addEventListener("input", function() {
 
 })
 
+inputFieldEl.addEventListener("keypress", function(e) {
+
+    if (e.key === "Enter") {
+
+        let inputValue = inputFieldEl.value
+    
+        addItemToDB(inputValue, auth.currentUser)
+        
+        clearInputFieldEl()
+
+        lockAddButton(true)
+
+    }
+
+})
+
 addButtonEl.addEventListener("click", function() {
 
     let inputValue = inputFieldEl.value
@@ -314,6 +330,8 @@ addButtonEl.addEventListener("click", function() {
     lockAddButton(true)
 
 })
+
+// Refactor code for two event listeners above into a function?
 
 modalAlertCloseBtn.addEventListener("click", function() {
 
@@ -521,11 +539,23 @@ function appendItemToShoppingListEl(listEl, wholeDoc) {
 
     let newEl = document.createElement("li")
 
+    newEl.setAttribute("tabindex", "0") // Makes list item focusable
+
     newEl.textContent = postData.body
 
     newEl.addEventListener("click", function() {
 
         deleteItemFromDB(wholeDoc.id)
+
+    })
+
+    newEl.addEventListener("keydown", function(e) {
+
+        if (e.key === "Enter") {
+
+            deleteItemFromDB(wholeDoc.id)
+            
+        }
 
     })
 

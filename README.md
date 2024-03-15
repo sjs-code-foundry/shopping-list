@@ -18,7 +18,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [x] Disable Add to cart button if no text is entered
 - [x] Convert all text & element sizes to em values for scalability across devices
 - [ ] Add focus states to the input fields
-- [ ] Make the list items focusable (allow impaired users to check off items)
+- [x] Make the list items focusable (allow impaired users to check off items)
 - [ ] Implement CSS Breakpoints for screen sizes (768px)
 #### Aesthetics
 - [x] Fix spacing of link buttons in drop-down, sidebar and login menus
