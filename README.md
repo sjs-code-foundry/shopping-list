@@ -12,6 +12,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 ### v0.1.4-alpha
 #### Security
 - [ ] Get App Check to work
+- [ ] Implement security rules in Firebase
 #### Quality of Life (for me)
 - [x] Implement isOffline const for easy switching between live and emulator
 #### User Experience
