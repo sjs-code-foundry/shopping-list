@@ -4,9 +4,10 @@
     --color-background: #E2E2E2;
 
     --app-width: 90vw;
+    --sidebar-width: 30vw;
 
-    --menu-icon-width: 3em;
-    --menu-icon-thickness: 0.25em;
+    --menu-icon-width: 6em;
+    --menu-icon-thickness: 0.5em;
 }
 
 /* Main Formatting */
@@ -35,8 +36,20 @@ html, body {
         auto;
 }
 
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.75rem;
+}
+
+p {
+    font-size: 2rem;
+}
+
 img {
-    width: 2em;
+    width: calc(var(--menu-icon-width) / 1.75);
     margin: 0 auto;
 }
 
@@ -51,14 +64,15 @@ img {
     flex-direction: row;
 }
 
-#sect-account p, #account-switch {
+#account-sw-prompt, #account-switch {
     margin: 1em 0;
     padding: 0;
-    font-size: 1rem;
+    font-size: 2.5rem;
+    white-space: nowrap;
 }
 
 #account-sw-prompt {
-    width: 7.5em;
+    margin-right: 0.5em;
 }
 
 #account-switch {
@@ -96,9 +110,9 @@ input {
     background-color: #BBBAC6;
     border: 0;
     width: var(--app-width);
-    padding: 15px 0;
-    border-radius: 8px;
-    font-size: 20px;
+    padding: 1em 0;
+    border-radius: 0.5em;
+    font-size: 2.5rem;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
     margin: 0.625em 0;
@@ -115,8 +129,8 @@ input::placeholder {
     border: 0;
     width: var(--app-width);
     padding: 1em;
-    border-radius: 0.4em;
-    font-size: 1.25rem;
+    border-radius: 0.5em;
+    font-size: 2.5rem;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
 }
@@ -142,7 +156,7 @@ ul {
 }
 
 .container ul li {
-    font-size: 1.25rem;
+    font-size: 2.5rem;
     background-color: #BB4D00;
     padding: 0.8em;
     border-radius: 0.4em;
@@ -189,7 +203,7 @@ ul {
         width: var(--app-width);
 
         background-color: var(--color-background);
-        font-size: 2rem;
+        font-size: 4rem;
         border: none;
     }
 
@@ -202,10 +216,12 @@ ul {
     }
 
     .header img {
-        display: block;
-        float: left;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 1em;
+        margin: auto;
         font-size: 2rem;
-        padding: 0.3125em 0.625em;
         text-decoration: none;
     }
 
@@ -293,7 +309,7 @@ ul {
         left: 0;
         right: auto;
         width: 100%;
-        max-width: 20vw;
+        max-width: var(--sidebar-width);
         height: 100%;
         z-index: 3;
     }
@@ -310,10 +326,10 @@ ul {
     .header li button {
         display: block;
         padding: 0.625em 0;
-        width: 20vw;
+        width: var(--sidebar-width);
 
         background-color: var(--color-background);
-        font-size: 2rem;
+        font-size: 4rem;
         border: none;
     }
 
@@ -336,16 +352,18 @@ ul {
         float: none;
     }
 
+    /* Refactor code below into something that can be automatically calculated, creating more maintainable code */
+
     :root {
-        --app-width: 70vw;
+        --app-width: 60vw;
     }
 
     .container {
-        margin: 0 5vw 0 25vw;
+        margin: 0 5vw 0 35vw;
     }
 
     footer {
-        margin: 0 5vw 0 25vw;
+        margin: 0 5vw 0 35vw;
     }
 }
 
