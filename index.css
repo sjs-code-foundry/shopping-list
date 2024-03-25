@@ -328,6 +328,7 @@ ul {
         max-width: var(--sidebar-width);
         height: 100%;
         z-index: 3;
+        overflow: auto;
     }
 
     .header ul {

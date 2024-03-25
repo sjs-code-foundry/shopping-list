@@ -20,9 +20,9 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [x] Scale elements for easier targeting across devices
 - [x] Implement focus state control for drop-down menu (for vertical PC monitors)
 - [x] Add focus states to the input fields
-- [ ] Set a focus order to the elements to control how users select things
 - [x] Make the list items focusable (allow impaired users to check off items)
 - [ ] Implement CSS Breakpoints for screen sizes (768px)
+- [x] Add Scroll Bar to side menu in Landscape
 #### Aesthetics
 - [x] Fix spacing of link buttons in drop-down, sidebar and login menus
 #### Code Readability
