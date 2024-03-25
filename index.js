@@ -110,6 +110,8 @@ onAuthStateChanged(auth, (user => {
 
         fetchShoppingList(user)
 
+        lockAddButton(true)
+
     } else {
 
         inputLock(true)
@@ -149,6 +151,7 @@ function fetchShoppingList(user) {
 
 /* === DOM Elements === */
 
+const menuIconEl = document.getElementById("menu-icon")
 const tabListBtnEl = document.getElementById("tab-list")
 const tabAccountBtnEl = document.getElementById("tab-account")
 const tabLogoutBtnEl = document.getElementById("tab-logout")
@@ -173,13 +176,11 @@ const shoppingListEl = document.getElementById("shopping-list")
 const modalAlertEl = document.getElementById("modal-alert")
 const modalAlertCloseBtn = document.getElementById("modal-alert-close")
 
-const aboutVersionEl = document.getElementById("about-version")
-
 const footerUserstatusEl = document.getElementById("footer-userstatus")
 
 /* === Constants/Variables === */
 
-const versionNum = "v0.1.3-alpha"
+const versionNum = "v0.1.4-alpha"
 
 let accountExists = true
 signInOnSwitch() // Setup initial state of sign-in modal
@@ -218,6 +219,12 @@ document.addEventListener("click", function(e) {
     }
 
     // Refactor above with or statement in if
+
+})
+
+menuIconEl.addEventListener("focus", function() {
+    
+    headerMenuBtn.checked = true
 
 })
 
@@ -295,6 +302,28 @@ tabLogoutBtnEl.addEventListener("click", function() {
 
 })
 
+inputFieldEl.addEventListener("input", function() {
+
+    lockAddButton(false)
+
+})
+
+inputFieldEl.addEventListener("keypress", function(e) {
+
+    if (e.key === "Enter") {
+
+        let inputValue = inputFieldEl.value
+    
+        addItemToDB(inputValue, auth.currentUser)
+        
+        clearInputFieldEl()
+
+        lockAddButton(true)
+
+    }
+
+})
+
 addButtonEl.addEventListener("click", function() {
 
     let inputValue = inputFieldEl.value
@@ -303,7 +332,11 @@ addButtonEl.addEventListener("click", function() {
     
     clearInputFieldEl()
 
+    lockAddButton(true)
+
 })
+
+// Refactor code for two event listeners above into a function?
 
 modalAlertCloseBtn.addEventListener("click", function() {
 
@@ -325,6 +358,8 @@ function signInOnSwitch() {
         tabAccountBtnEl.textContent = "Sign In"
         tabAccountFormEl.reset()
 
+        accountLoginGoogleBtn.style.display = "inline-block"
+
     } else {
 
         accountSwPrompt.textContent = "Got an account?"
@@ -332,6 +367,8 @@ function signInOnSwitch() {
         document.getElementById("modal-title").textContent = "Sign Up"
         tabAccountBtnEl.textContent = "Sign Up"
         tabAccountFormEl.reset()
+
+        accountLoginGoogleBtn.style.display = "none"
 
     }
 
@@ -388,6 +425,8 @@ function authSignInWithEmail(formData) {
 
                 modalAlert(`Sign In Error Code: ${error.code}`, error.message)
 
+                tabAccountFormEl.reset()
+
             }
 
         })
@@ -414,6 +453,8 @@ function authCreateAccountWithEmail(formData) {
         .catch((error) => {
 
             modalAlert(`Create Account Error Code: ${error.code}`, error.message)
+
+            tabAccountFormEl.reset()
 
         })
 
@@ -448,19 +489,53 @@ function clearInputFieldEl() {
 }
 
 function inputLock(state) {
+
     if (state) {
+
+        lockInputField(true)
+
+        lockAddButton(true)
+
+    } else {
+
+        lockInputField(false)
+
+        lockAddButton(false)
+
+    }
+
+}
+
+function lockInputField(state) {
+
+    if (state) {
+
         inputFieldEl.disabled = true
+
+    } else {
+
+        inputFieldEl.disabled = false
+
+    }
+
+}
+
+function lockAddButton(state) {
+
+    if (state) {
 
         addButtonEl.disabled = true
         addButtonEl.style.color = "lightgray"
         addButtonEl.style.cursor = "not-allowed"
+
     } else {
-        inputFieldEl.disabled = false
 
         addButtonEl.disabled = false
         addButtonEl.style.color = "#1C0F13"
         addButtonEl.style.cursor = "pointer"
+
     }
+
 }
 
 function appendItemToShoppingListEl(listEl, wholeDoc) {
@@ -469,11 +544,23 @@ function appendItemToShoppingListEl(listEl, wholeDoc) {
 
     let newEl = document.createElement("li")
 
+    newEl.setAttribute("tabindex", "0") // Makes list item focusable
+
     newEl.textContent = postData.body
 
     newEl.addEventListener("click", function() {
 
         deleteItemFromDB(wholeDoc.id)
+
+    })
+
+    newEl.addEventListener("keydown", function(e) {
+
+        if (e.key === "Enter") {
+
+            deleteItemFromDB(wholeDoc.id)
+            
+        }
 
     })
 
@@ -523,5 +610,5 @@ function modalAlert(heading, content) {
 versionUpdate()
 
 function versionUpdate() {
-    aboutVersionEl.textContent = `Version: ${versionNum}`
+    document.getElementById("about-version").textContent = `Version: ${versionNum}`
 }

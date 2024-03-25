@@ -4,12 +4,17 @@
     --color-background: #E2E2E2;
 
     --app-width: 90vw;
+    --sidebar-width: 30vw;
 
-    --menu-icon-width: 48px;
-    --menu-icon-thickness: 4px;
+    --menu-icon-width: 6em;
+    --menu-icon-thickness: 0.5em;
 }
 
 /* Main Formatting */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
 
 html, body {
     margin: 0;
@@ -31,31 +36,47 @@ html, body {
         auto;
 }
 
+h1 {
+    font-size: 4rem;
+}
+
+h2 {
+    font-size: 2.75rem;
+}
+
+p {
+    font-size: 2rem;
+}
+
 img {
-    width: 64px;
+    width: calc(var(--menu-icon-width) / 1.75);
     margin: 0 auto;
 }
 
 /* Tab Settings */
+
+#sect-account input {
+    margin: 0 0 0.625em 0;
+}
 
 #sect-account #account-sw-line {
     display: flex;
     flex-direction: row;
 }
 
-#sect-account p, #account-switch {
+#account-sw-prompt, #account-switch {
     margin: 1em 0;
     padding: 0;
-    font-size: 16px;
+    font-size: 2.5rem;
+    white-space: nowrap;
 }
 
 #account-sw-prompt {
-    width: 120px;
+    margin-right: 0.5em;
 }
 
 #account-switch {
-    cursor: pointer;
-    margin-left: 5px;
+    cursor: pointer;        
     color: blue;
     background-color: var(--color-background);
     text-align: left;
@@ -66,10 +87,14 @@ img {
     text-align: center;
 }
 
+#sect-about p {
+    text-align: start;
+}
+
 /* Sign In Area */
 
 #account-login-google {
-    margin: 20px 0 10px 0;
+    margin: 1.25em 0 0.625em 0;
 
     color: white;
     background-color: grey;
@@ -89,12 +114,12 @@ input {
     background-color: #BBBAC6;
     border: 0;
     width: var(--app-width);
-    padding: 15px 0;
-    border-radius: 8px;
-    font-size: 20px;
+    padding: 1em 0;
+    border-radius: 0.5em;
+    font-size: 2.5rem;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
-    margin: 10px 0;
+    margin: 0.625em 0;
 }
 
 input::placeholder {
@@ -107,9 +132,9 @@ input::placeholder {
     background-color: #B7CECE;
     border: 0;
     width: var(--app-width);
-    padding: 15px;
-    border-radius: 8px;
-    font-size: 20px;
+    padding: 1em;
+    border-radius: 0.5em;
+    font-size: 2.5rem;
     text-align: center;
     font-family: 'Indie Flower', sans-serif;
 }
@@ -117,6 +142,10 @@ input::placeholder {
 .container button:hover {
     background-color: #6E7E85;
     cursor: pointer;
+}
+
+input:focus, .container button:focus {
+    box-shadow: 0 0 0.25em 0.25em green;
 }
 
 /* List Elements */
@@ -131,22 +160,26 @@ ul {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 0.625em;
 }
 
 .container ul li {
-    font-size: 20px;
+    font-size: 2.5rem;
     background-color: #BB4D00;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 0.8em;
+    border-radius: 0.4em;
     flex-grow: 1;
     text-align: center;
-    box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2)
+    box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.2)
 }
 
 .container ul li:hover {
     background-color: #CA5310;
     cursor: pointer;
+}
+
+.container ul li:focus {
+    box-shadow: 0 0 0.25em 0.25em red;
 }
 
 /* Code for Rotating Screens */
@@ -156,7 +189,7 @@ ul {
 
     .header {
         background-color: var(--color-background);
-        box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+        box-shadow: 0.0625em 0.0625em 0.25em 0 rgba(0,0,0,.1);
         position: fixed;
         top: 0;
         margin: 0 auto;
@@ -170,6 +203,7 @@ ul {
     .header ul {
         margin: 0;
         padding: 0;
+        gap: 0;
         list-style: none;
         overflow: hidden;
         background-color: var(--color-background);
@@ -177,11 +211,11 @@ ul {
 
     .header li button {
         display: block;
-        padding: 20px 0;
+        padding: 0.625em 0;
         width: var(--app-width);
 
         background-color: var(--color-background);
-        font-size: 32px;
+        font-size: 4rem;
         border: none;
     }
 
@@ -189,15 +223,21 @@ ul {
         background-color: #EFEFEF;
     }
 
+    .header li button:focus {
+        font-weight: bold;
+    }
+
     .header li button:active {
         background-color: #333;
     }
 
     .header img {
-        display: block;
-        float: left;
-        font-size: 2em;
-        padding: 10px 20px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 1em;
+        margin: auto;
+        font-size: 2rem;
         text-decoration: none;
     }
 
@@ -255,7 +295,7 @@ ul {
     }
 
     .header .menu-btn:checked ~ .menu {
-        max-height: 480px;
+        max-height: 30em;
     }
 
     .header .menu-btn:checked ~ .menu-icon .navicon {
@@ -279,20 +319,22 @@ ul {
 @media screen and (orientation: landscape) {
     .header {
         background-color: var(--color-background);
-        box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+        box-shadow: 0.0625em 0.0625em 0.25em 0 rgba(0,0,0,.1);
         position: fixed;
         top: 0;
         left: 0;
         right: auto;
         width: 100%;
-        max-width: 20vw;
+        max-width: var(--sidebar-width);
         height: 100%;
         z-index: 3;
+        overflow: auto;
     }
 
     .header ul {
         margin: 0;
         padding: 0;
+        gap: 0;
         list-style: none;
         overflow: hidden;
         background-color: var(--color-background);
@@ -300,16 +342,20 @@ ul {
 
     .header li button {
         display: block;
-        padding: 20px 0;
-        width: 20vw;
+        padding: 0.625em 0;
+        width: var(--sidebar-width);
 
         background-color: var(--color-background);
-        font-size: 32px;
+        font-size: 4rem;
         border: none;
     }
 
     .header li button:hover {
         background-color: #EFEFEF;
+    }
+
+    .header li button:focus {
+        font-weight: bold;
     }
 
     .header li button:active {
@@ -327,16 +373,18 @@ ul {
         float: none;
     }
 
+    /* Refactor code below into something that can be automatically calculated, creating more maintainable code */
+
     :root {
-        --app-width: 70vw;
+        --app-width: 60vw;
     }
 
     .container {
-        margin: 0 5vw 0 25vw;
+        margin: 0 5vw 0 35vw;
     }
 
     footer {
-        margin: 0 5vw 0 25vw;
+        margin: 0 5vw 0 35vw;
     }
 }
 
@@ -344,7 +392,7 @@ ul {
 
 :root {
     --modal-width: 80vw;
-    --modal-padding: 10px;
+    --modal-padding: 0.625em;
 }
 
 #modal-alert {
@@ -355,10 +403,10 @@ ul {
 
     padding: var(--modal-padding);
 
-    border-radius: 20px;
+    border-radius: 1.25em;
 
     background-color: var(--color-background);
-    box-shadow: 0 0 5px 5px rgba(0,0,0,.1);
+    box-shadow: 0 0 0.3125em 0.3125em rgba(0,0,0,.1);
 }
 
 .modal-header {
@@ -368,10 +416,10 @@ ul {
 }
 
 #modal-alert .modal-header button {
-    height: 56px;
-    padding: 5px 20px;
+    height: 2.8em;
+    padding: 0.25em 1em;
     margin: auto 0;
-    font-size: 20px;
+    font-size: 1.25rem;
     text-align: center;
 }
 
