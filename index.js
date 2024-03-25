@@ -176,8 +176,6 @@ const shoppingListEl = document.getElementById("shopping-list")
 const modalAlertEl = document.getElementById("modal-alert")
 const modalAlertCloseBtn = document.getElementById("modal-alert-close")
 
-const aboutVersionEl = document.getElementById("about-version")
-
 const footerUserstatusEl = document.getElementById("footer-userstatus")
 
 /* === Constants/Variables === */
@@ -612,5 +610,5 @@ function modalAlert(heading, content) {
 versionUpdate()
 
 function versionUpdate() {
-    aboutVersionEl.textContent = `Version: ${versionNum}`
+    document.getElementById("about-version").textContent = `Version: ${versionNum}`
 }
