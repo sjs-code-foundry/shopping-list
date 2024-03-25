@@ -225,7 +225,7 @@ document.addEventListener("click", function(e) {
 })
 
 menuIconEl.addEventListener("focus", function() {
-
+    
     headerMenuBtn.checked = true
 
 })

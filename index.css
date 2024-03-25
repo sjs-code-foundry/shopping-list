@@ -87,6 +87,10 @@ img {
     text-align: center;
 }
 
+#sect-about p {
+    text-align: start;
+}
+
 /* Sign In Area */
 
 #account-login-google {
@@ -140,6 +144,10 @@ input::placeholder {
     cursor: pointer;
 }
 
+input:focus, .container button:focus {
+    box-shadow: 0 0 0.25em 0.25em green;
+}
+
 /* List Elements */
 
 hr {
@@ -168,6 +176,10 @@ ul {
 .container ul li:hover {
     background-color: #CA5310;
     cursor: pointer;
+}
+
+.container ul li:focus {
+    box-shadow: 0 0 0.25em 0.25em red;
 }
 
 /* Code for Rotating Screens */
@@ -209,6 +221,10 @@ ul {
 
     .header li button:hover {
         background-color: #EFEFEF;
+    }
+
+    .header li button:focus {
+        font-weight: bold;
     }
 
     .header li button:active {
@@ -335,6 +351,10 @@ ul {
 
     .header li button:hover {
         background-color: #EFEFEF;
+    }
+
+    .header li button:focus {
+        font-weight: bold;
     }
 
     .header li button:active {

@@ -19,7 +19,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [x] Convert all text & element sizes to em values for scalability across devices
 - [x] Scale elements for easier targeting across devices
 - [x] Implement focus state control for drop-down menu (for vertical PC monitors)
-- [ ] Add focus states to the input fields
+- [x] Add focus states to the input fields
 - [ ] Set a focus order to the elements to control how users select things
 - [x] Make the list items focusable (allow impaired users to check off items)
 - [ ] Implement CSS Breakpoints for screen sizes (768px)
@@ -34,5 +34,6 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [ ] Get App Check to work
 #### User Experience
 - [ ] Add ability to sort list in descending order as well as ascending
+- [ ] Fix issues with tab control on drop-down menu (closes on first open, doesn't close when you run out of links)
 #### Testing
 - [ ] Try to get emulators working so you can apply the fix to the Weekly Checks app
