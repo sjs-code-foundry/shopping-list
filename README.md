@@ -18,7 +18,7 @@ Visit https://github.com/sjs-code-foundry/shopping-list/releases for an updated 
 - [x] Disable Add to cart button if no text is entered
 - [x] Convert all text & element sizes to em values for scalability across devices
 - [x] Scale elements for easier targeting across devices
-- [ ] Implement focus state control for drop-down menu (for vertical PC monitors)
+- [x] Implement focus state control for drop-down menu (for vertical PC monitors)
 - [ ] Add focus states to the input fields
 - [ ] Set a focus order to the elements to control how users select things
 - [x] Make the list items focusable (allow impaired users to check off items)

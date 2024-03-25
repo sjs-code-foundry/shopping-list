@@ -151,6 +151,7 @@ function fetchShoppingList(user) {
 
 /* === DOM Elements === */
 
+const menuIconEl = document.getElementById("menu-icon")
 const tabListBtnEl = document.getElementById("tab-list")
 const tabAccountBtnEl = document.getElementById("tab-account")
 const tabLogoutBtnEl = document.getElementById("tab-logout")
@@ -220,6 +221,12 @@ document.addEventListener("click", function(e) {
     }
 
     // Refactor above with or statement in if
+
+})
+
+menuIconEl.addEventListener("focus", function() {
+
+    headerMenuBtn.checked = true
 
 })
 
