@@ -180,7 +180,7 @@ const footerUserstatusEl = document.getElementById("footer-userstatus")
 
 /* === Constants/Variables === */
 
-const versionNum = "v0.1.4-alpha"
+const versionNum = "v0.1.5-alpha"
 
 let accountExists = true
 signInOnSwitch() // Setup initial state of sign-in modal
